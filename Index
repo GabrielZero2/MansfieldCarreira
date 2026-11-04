@@ -1,1 +1,2155 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=980, viewport-fit=cover">
+<title>M-Carreira · FIFA 21</title>
+<link rel="manifest" href="./manifest.webmanifest">
+<meta name="theme-color" content="#071526">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<link rel="apple-touch-icon" href="./icons/icon.svg">
+<style>
+:root{
+  --bg:#050d1b; --card:#0a1a30; --card2:#0c2038; --line:#1d4a63;
+  --gold:#e3b84d; --cyan:#2cb8f0; --green:#34d399; --text:#f2f6fb; --muted:#a9b8c9;
+  color-scheme:dark;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{background:var(--bg);color:var(--text);font-family:"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+body{min-height:100vh;padding-bottom:calc(92px + env(safe-area-inset-bottom,0px))}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
 
+/* Cabeçalho */
+.top{padding:calc(18px + env(safe-area-inset-top,0px)) 18px 18px;display:flex;justify-content:space-between;align-items:flex-start;gap:12px;
+  background:linear-gradient(160deg,#0d2a47 0%,#071526 70%);border-bottom:1px solid #123552}
+.eyebrow{font-size:.78rem;font-weight:800;letter-spacing:.2em;color:var(--cyan);text-transform:uppercase}
+.top h1{font-size:2.6rem;font-weight:800;letter-spacing:-.01em;line-height:1.1;margin:4px 0 6px}
+.top p{color:var(--muted);font-size:1.02rem;line-height:1.4;max-width:15em}
+.ver{margin-top:6px;white-space:nowrap;padding:10px 18px;border-radius:999px;border:1px solid #1f6a5a;background:#0b3a35;color:var(--green);font-weight:800;font-size:.95rem}
+
+main{padding:16px 14px 0}
+.view{display:none}.view.on{display:block}
+
+/* Boas-vindas */
+.hero{position:relative;overflow:hidden;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 20px;border-radius:26px;
+  border:1px solid #2b5e78;background:radial-gradient(120% 140% at 85% 120%,#2f6f63 0%,#133b52 45%,#0c2740 100%)}
+.hero::before{content:"";position:absolute;left:-20%;right:20%;top:40%;height:240px;border-radius:50%;border:1px solid rgba(255,255,255,.08)}
+.hero>*{position:relative}
+.gold-label{font-size:.78rem;font-weight:800;letter-spacing:.17em;color:var(--gold);text-transform:uppercase}
+.hero h2{font-size:1.9rem;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin:8px 0}
+.hero p{color:#cfdbe8;font-size:1.02rem;line-height:1.45}
+.crest{flex:none;width:96px;height:112px;display:grid;place-items:center;font-size:1.9rem;font-weight:800;color:var(--gold);
+  background:linear-gradient(#10325a,#0a2040);border-top:4px solid var(--gold);
+  clip-path:polygon(0 0,100% 0,100% 70%,50% 100%,0 70%)}
+
+/* Grade */
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;align-items:stretch}
+.col{display:flex;flex-direction:column;gap:14px}
+.card{display:flex;flex-direction:column;flex:1;text-align:left;padding:18px 18px 16px;border-radius:24px;border:2px solid #17506b;
+  background:linear-gradient(180deg,#0b2038,#07142a)}
+.card:active{transform:scale(.985)}
+.chead{display:flex;align-items:center;gap:12px}
+.ico{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:#16283d;font-size:1.15rem;flex:none}
+.chead span{font-size:.8rem;font-weight:800;letter-spacing:.14em;color:var(--gold);text-transform:uppercase}
+.card h3{font-size:1.5rem;font-weight:800;margin:14px 0 6px;letter-spacing:-.01em}
+.num{font-size:2.5rem;font-weight:800;color:var(--gold);line-height:1.1}
+.desc{color:var(--muted);font-size:1.05rem;line-height:1.35;margin-top:6px}
+.grow{flex:1}
+.foot{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:14px;padding-top:12px;border-top:1px solid #1c3750;
+  font-size:.88rem;color:var(--muted)}
+.foot b{color:var(--gold);font-weight:800;white-space:nowrap}
+.dash{width:36px;height:5px;border-radius:3px;background:var(--gold);margin:14px 0 18px}
+.pitch{margin-top:12px;flex:1;min-height:150px;border-radius:20px;border:2px solid #2f7a52;padding:14px;background:linear-gradient(#2f7a54,#276646)}
+.pitch i{display:block;height:100%;border:2px solid rgba(255,255,255,.28);border-radius:12px}
+
+/* Dentro de campo */
+.results{margin-top:16px;padding:18px 20px 24px;border-radius:26px;border:2px solid #17506b;background:#0a2038;
+  display:flex;justify-content:space-between;align-items:flex-start;gap:12px;min-height:130px}
+.results .eyebrow{font-size:1.2rem;letter-spacing:.2em}
+.results h3{font-size:1.9rem;font-weight:800;margin-top:4px}
+.btn{padding:14px 20px;border-radius:16px;border:1px solid #22628a;background:#0d3050;font-weight:800;white-space:nowrap}
+.rlist{width:100%;margin-top:12px;display:grid;gap:8px}
+.rrow{display:flex;justify-content:space-between;padding:10px 14px;border-radius:12px;background:#0d2a46;font-size:.95rem}
+.rrow b{color:var(--gold)}
+.credit{text-align:center;color:var(--muted);font-size:1.02rem;margin:44px 0 18px}
+
+/* Telas em construção */
+.empty{margin-top:8px;padding:28px 22px;border-radius:24px;border:2px dashed #1d4a63;background:#08182c}
+.empty h2{font-size:1.7rem;font-weight:800;margin-bottom:8px}
+.empty p{color:var(--muted);line-height:1.5}
+
+/* Quadro de avisos */
+.panel{margin-top:8px;padding:34px 30px 30px;border-radius:30px;border:2px solid #1d5a7a;background:linear-gradient(180deg,#0e2f4d,#0a2038)}
+.panel .eyebrow{font-size:1.15rem;letter-spacing:.2em}
+.panel h2{font-size:2.3rem;font-weight:800;margin:4px 0 22px;letter-spacing:-.01em}
+.panel .intro{color:var(--muted);font-size:1.4rem;line-height:1.5;margin-bottom:28px}
+.panel label{display:block;font-size:1.35rem;font-weight:800;margin:0 0 12px}
+.fld{width:100%;display:block;margin-bottom:26px;padding:22px 26px;border-radius:20px;border:2px solid #1d4a63;background:#060f20;color:var(--text);
+  font:inherit;font-size:1.5rem;outline:none}
+.fld::placeholder{color:#6f7e91}
+.fld:focus{border-color:var(--cyan)}
+select.fld{appearance:none;-webkit-appearance:none;padding-left:34px;
+  background:#060f20 url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23d7e3f0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E") no-repeat right 22px center}
+textarea.fld{min-height:230px;resize:vertical;line-height:1.45}
+.add{padding:26px 42px;border-radius:20px;background:#5ff0cf;color:#06251f;font-size:1.55rem;font-weight:800}
+.add:active{transform:scale(.98)}
+.saved-h{display:flex;justify-content:space-between;align-items:center;margin:44px 4px 20px}
+.saved-h h2{font-size:2.3rem;font-weight:800}
+.pill{padding:12px 22px;border-radius:16px;border:1px solid #1f5f80;color:var(--text);font-size:1.25rem}
+.notes{display:grid;gap:18px}
+.note{padding:24px 26px;border-radius:24px;border:2px solid #17506b;background:linear-gradient(180deg,#0b2038,#07142a)}
+.note .tag{display:inline-block;font-size:1rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.note h3{font-size:1.75rem;font-weight:800;margin:8px 0}
+.note p{color:#cbd8e6;font-size:1.35rem;line-height:1.5;white-space:pre-wrap;word-break:break-word}
+.note .meta{display:flex;justify-content:space-between;align-items:center;margin-top:18px;padding-top:14px;border-top:1px solid #1c3750;color:var(--muted);font-size:1.15rem}
+.note .del{padding:10px 20px;border-radius:14px;border:1px solid #6b2f3a;color:#ff9aa8;font-weight:700;font-size:1.15rem}
+.vazio{padding:34px 26px;border-radius:24px;border:2px dashed #1d4a63;color:var(--muted);font-size:1.35rem;line-height:1.5;text-align:center}
+
+/* Central do Elenco */
+[hidden]{display:none!important}
+.panel h2.m{font-size:1.9rem;margin-bottom:14px}
+.tabs{display:flex;gap:14px;margin:6px 0 26px}
+.tab{flex:1;padding:24px 8px;border-radius:20px;border:2px solid #1d4a63;background:#0a1d34;font-size:1.45rem;font-weight:800}
+.tab.on{background:#f1c935;border-color:#f1c935;color:#2a2204}
+.sub{padding:26px;border-radius:26px;border:2px solid #1d4a63;background:#0a1d34;margin-bottom:24px}
+.sub h3{font-size:1.9rem;font-weight:800;margin-bottom:12px}
+.panel .sub .intro{font-size:1.3rem;margin-bottom:22px}
+.chip{display:inline-block;padding:10px 20px;border-radius:14px;border:1px solid #1f5f80;font-size:1.15rem;color:var(--muted);margin-bottom:22px}
+.pitch2{position:relative;aspect-ratio:100/106;border-radius:26px;border:4px solid #4fe0b0;overflow:hidden;margin-bottom:22px;
+  background:repeating-linear-gradient(180deg,#2f8a58 0 12.5%,#2a7d4f 12.5% 25%)}
+.ln{position:absolute;border:2px solid rgba(255,255,255,.4)}
+.pt{position:absolute;transform:translate(-50%,-50%);width:26%}
+.pt,.bp{display:flex;flex-direction:column;align-items:center;text-align:center;gap:2px;color:#fff;border-radius:16px}
+.sh{position:relative;display:block;width:78px}
+.sh svg{display:block;width:100%}
+.sh i{position:absolute;left:0;right:0;top:34%;font-style:normal;font-weight:800;font-size:1.25rem;color:#2a2204}
+.pt b,.bp b{font-size:1.1rem;line-height:1.15;text-shadow:0 1px 3px #000}
+.pt small,.bp small{font-size:.95rem;color:#dbe7f3;line-height:1.1}
+.bg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.bp{padding:14px 6px;border:2px solid transparent;background:#0b2440}
+.bp b{text-shadow:none;font-size:1.15rem}
+.sel{outline:3px solid #5ff0cf;outline-offset:2px;background:rgba(95,240,207,.14)}
+.btn2{display:block;width:100%;padding:24px;border-radius:20px;border:2px solid #1f5f80;background:#12304f;font-size:1.5rem;font-weight:800;margin-bottom:16px}
+.btn2.main{background:#5ff0cf;color:#06251f;border-color:#5ff0cf}
+.btn2.del{border-color:#6b2f3a;color:#ff9aa8}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:0 26px}
+.fonte{color:var(--muted);font-size:1.25rem;line-height:1.5;margin:6px 0 4px}
+.tb{width:100%;border-collapse:collapse;font-size:1.25rem}
+.tb th{text-align:left;color:var(--gold);padding:12px 10px;font-size:1.05rem}
+.tb td{padding:16px 10px;border-top:1px solid #1c3750}
+.selbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;font-size:1.25rem;min-height:12px}
+.selbar button{padding:12px 22px;border-radius:14px;border:1px solid #1f5f80;background:#12304f;font-weight:700;font-size:1.15rem}
+
+/* Criar formação (arrastar camisas) */
+.pitch2.ed .pt{outline:2px dashed rgba(255,255,255,.4);outline-offset:2px;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none}
+.pitch2.ed .pt.sel{outline:3px solid #5ff0cf;background:rgba(95,240,207,.14)}
+
+/* Tabelas Status e Finanças */
+.tbar{display:flex;gap:16px;margin-bottom:22px;align-items:stretch}
+.tbar .fld{margin-bottom:0}
+.tbar .bq{flex:1;min-width:0}
+.tbar .bc{width:250px;flex:none}
+.tbar .ba{width:auto;margin:0;white-space:nowrap;padding:0 26px;font-size:1.2rem;flex:none}
+.tb{font-size:1.05rem}
+.tb th{color:var(--muted);font-weight:700}
+.tb td{white-space:nowrap;vertical-align:middle}
+.tb td b{font-weight:800;font-size:1.1rem}
+.tb td small{display:block;color:var(--muted);font-size:.8rem;margin-top:4px}
+.tb td.gv{color:var(--gold);font-weight:800;font-size:1.35rem}
+.ab{padding:10px 16px;border-radius:12px;border:1px solid #1f5f80;background:#12304f;font-weight:700;font-size:.95rem;margin-right:8px}
+.ab.del{border-color:#6b2f3a;color:#ff9aa8;margin-right:0}
+
+/* Partidas */
+.phead{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:6px}
+.phead h2,.phead h3{margin:0 0 6px}
+.ptabs{display:flex;gap:14px;overflow-x:auto;padding:0 0 12px;margin:14px 0 26px}
+.pab{flex:none;padding:16px 24px;border-radius:18px;border:2px solid #1d4a63;background:#0a1d34;font-weight:700;font-size:1.25rem;white-space:nowrap}
+.pab.on{background:#f1c935;border-color:#f1c935;color:#2a2204;font-weight:800}
+.eg{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.eg .btn2{margin:0}
+.evf{margin-top:22px;padding:24px;border-radius:24px;border:2px solid #1d4a63;background:#0c2038}
+.btn3{padding:16px 24px;border-radius:16px;border:1px solid #1f5f80;background:#12304f;font-weight:700;font-size:1.2rem;white-space:nowrap}
+.evl{display:grid;gap:12px;margin-top:20px}
+.ev{display:flex;align-items:center;gap:14px;padding:16px 18px;border-radius:16px;background:#0b2440;font-size:1.25rem;line-height:1.35}
+.ev .mn{flex:none;color:var(--gold);font-weight:800}
+.ev .tx{flex:1;min-width:0;word-break:break-word}
+.ev button{flex:none;padding:8px 16px;border-radius:12px;border:1px solid #6b2f3a;color:#ff9aa8;font-weight:700;font-size:1.05rem}
+.nr{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:12px 0;border-top:1px solid #1c3750;font-size:1.3rem}
+.nr .fld{width:150px;margin:0;padding:14px 18px;font-size:1.3rem;flex:none}
+.pmsg{font-size:1.25rem;color:var(--gold);margin:16px 0 0;min-height:1.4em}
+.hh{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;text-align:left}
+.hh h2{margin:0;font-size:1.9rem;font-weight:800}
+.hi{padding:22px;border-radius:22px;border:2px solid #17506b;background:#0b2038;margin-top:16px}
+.hi .t{display:flex;justify-content:space-between;gap:12px;align-items:center;font-size:1.5rem;font-weight:800}
+.rs{flex:none;padding:6px 14px;border-radius:10px;font-size:1.05rem;font-weight:800;color:#06251f}
+.rs.v{background:#5ff0cf}.rs.e{background:#f1c935}.rs.d{background:#ff8a99}
+.hi .m{color:var(--muted);font-size:1.15rem;margin-top:6px}
+.hi .dt{margin-top:14px;font-size:1.2rem;line-height:1.55;color:#cbd8e6;white-space:pre-wrap}
+.hi .ac{display:flex;gap:12px;margin-top:16px}
+
+/* Estatísticas */
+.panel+.panel{margin-top:24px}
+.tg{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px}
+.tl{padding:18px;border-radius:18px;background:#0b2440}
+.tl small{display:block;color:var(--muted);font-size:1.05rem;line-height:1.25}
+.tl b{display:block;font-size:1.9rem;color:var(--gold);margin-top:6px}
+.tl .fld{margin:8px 0 0;padding:12px 14px;font-size:1.4rem}
+.sb{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+.btn3.sv{background:#5ff0cf;color:#06251f;border-color:#5ff0cf}
+
+/* Base */
+.sh3{font-size:1.9rem;font-weight:800;margin:10px 0 18px}
+button.chip{cursor:pointer}
+
+/* Mercado */
+.cl{max-height:340px;overflow:auto;border:2px solid #1d4a63;border-radius:20px;background:#060f20;padding:4px 20px;margin-bottom:26px}
+.panel .cl label{display:flex;align-items:center;gap:16px;margin:0;padding:15px 0;border-top:1px solid #1c3750;font-size:1.3rem;font-weight:600}
+.panel .cl label:first-child{border-top:0}
+.cl input[type=checkbox],.ck input{width:26px;height:26px;accent-color:#5ff0cf;flex:none}
+.panel label.ck{display:flex;align-items:center;gap:16px;font-size:1.3rem;font-weight:600;margin:0 0 26px}
+
+/* Backup */
+.bb{display:block;width:auto;margin:0 0 16px;padding:26px 36px;border-radius:20px;border:2px solid #1f5f80;background:#12304f;font-size:1.5rem;font-weight:800;text-align:left}
+.bb.main{background:#5ff0cf;color:#06251f;border-color:#5ff0cf}
+.bb.del{color:#ff8a99;border-color:#6b2f3a}
+.lnk{display:block;color:var(--cyan);text-decoration:underline;word-break:break-all;font-size:1.3rem;margin-top:8px}
+.bkn{color:var(--muted);font-size:1.3rem;line-height:1.6;margin:14px 0 0}
+
+/* Mini-campo da tela inicial */
+.pitch{position:relative;min-height:330px}
+.pitch .mp{position:absolute;inset:14px}
+.pitch .mf{position:absolute;left:22px;top:20px;z-index:1;font-size:.8rem;font-weight:800;color:#e6fff4;background:rgba(0,0,0,.28);padding:3px 10px;border-radius:10px}
+.mj{position:absolute;transform:translate(-50%,-50%);width:28%;display:flex;flex-direction:column;align-items:center;gap:1px;color:#fff;text-align:center}
+.mj.vz{opacity:.45}
+.mj b{font-size:.78rem;font-weight:700;line-height:1.1;text-shadow:0 1px 3px #000}
+.ms{position:relative;display:block;width:36px}
+.ms svg{display:block;width:100%}
+.ms .mnum{position:absolute;left:0;right:0;top:34%;font-weight:800;font-size:.9rem;line-height:1;color:#2a2204;text-align:center}
+
+/* Barra inferior */
+nav{position:fixed;left:0;right:0;bottom:0;display:flex;gap:2px;padding:6px 6px calc(6px + env(safe-area-inset-bottom,0px));
+  background:#07111f;border-top:1px solid #16304a;z-index:5}
+nav button{flex:1;min-width:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:8px 2px;border-radius:16px;
+  border:2px solid transparent;color:var(--muted);font-size:.68rem;font-weight:700;line-height:1.1;text-align:center}
+nav button .i{font-size:1.35rem;line-height:1}
+nav button.on{color:var(--gold);border-color:#2fb88a;background:#0a2230}
+button:focus-visible{outline:2px solid var(--cyan);outline-offset:2px}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div>
+    <div class="eyebrow">FIFA 21 · Modo Carreira</div>
+    <h1>M-Carreira</h1>
+    <p>Seu diário técnico, elenco e temporada em um só lugar.</p>
+  </div>
+  <div class="ver">V2.3 · LOCAL</div>
+</header>
+
+<main>
+  <!-- INÍCIO -->
+  <section class="view on" id="v-inicio">
+    <div class="hero">
+      <div>
+        <div class="gold-label">Mansfield Town · Central do treinador</div>
+        <h2>Bem-vindo de volta, treinador.</h2>
+        <p>Seu clube, sua temporada e todas as decisões em um só lugar.</p>
+      </div>
+      <div class="crest">MT</div>
+    </div>
+
+    <div class="grid">
+      <div class="col">
+        <button class="card" data-go="elenco">
+          <div class="chead"><div class="ico">⚽</div><span>Tática e formação</span></div>
+          <h3>Central do Elenco</h3>
+          <div class="pitch"><i></i></div>
+          <div class="foot"><span>Plantel e formação atual</span><b>Mostrar mais ↗</b></div>
+        </button>
+      </div>
+      <div class="col">
+        <button class="card" data-go="estatisticas">
+          <div class="chead"><div class="ico">▥</div><span>Temporada</span></div>
+          <h3>Estatísticas</h3>
+          <div class="dash"></div>
+          <div class="desc grow">Desempenho do Mansfield</div>
+          <div class="foot"><span>Dados e rankings</span><b>Mostrar mais ↗</b></div>
+        </button>
+        <button class="card" data-go="partidas">
+          <div class="chead"><div class="ico">◷</div><span>Histórico</span></div>
+          <h3>Partidas</h3>
+          <div class="num" data-count="partidas">0</div>
+          <div class="desc grow">Partidas registradas</div>
+          <div class="foot"><span>Resultados e registros</span><b>Mostrar mais ↗</b></div>
+        </button>
+      </div>
+    </div>
+
+    <div class="grid">
+      <button class="card" data-go="quadro">
+        <div class="chead"><div class="ico">▤</div><span>Central do treinador</span></div>
+        <h3>Quadro de Avisos</h3>
+        <div class="num" data-count="avisos">0</div>
+        <div class="desc grow">Anotações e lembretes</div>
+        <div class="foot"><span>Planos e observações</span><b>Mostrar mais ↗</b></div>
+      </button>
+      <button class="card" data-go="base">
+        <div class="chead"><div class="ico" style="color:var(--gold)">✦</div><span>Futuro do clube</span></div>
+        <h3>Categorias de Base</h3>
+        <div class="num" data-count="base">0</div>
+        <div class="desc grow">Jovens cadastrados</div>
+        <div class="foot"><span>Desenvolvimento de talentos</span><b>Mostrar mais ↗</b></div>
+      </button>
+      <button class="card" data-go="mercado">
+        <div class="chead"><div class="ico">⇄</div><span>Gestão do plantel</span></div>
+        <h3>Mercado</h3>
+        <div class="num" data-count="mercado">0</div>
+        <div class="desc grow">Movimentações registradas</div>
+        <div class="foot"><span>Contratações e saídas</span><b>Mostrar mais ↗</b></div>
+      </button>
+      <button class="card" data-go="backup">
+        <div class="chead"><div class="ico">▣</div><span>Segurança</span></div>
+        <h3>Backup e Dados</h3>
+        <div class="desc grow" style="margin-top:14px">Proteja seu progresso e gerencie os dados da carreira.</div>
+        <div class="foot"><span>Importar e exportar</span><b>Mostrar mais ↗</b></div>
+      </button>
+    </div>
+
+    <div class="results">
+      <div>
+        <div class="eyebrow">Dentro de campo</div>
+        <h3>Últimos resultados</h3>
+      </div>
+      <button class="btn" data-go="partidas">Ver todas ↗</button>
+    </div>
+    <div class="rlist" id="ultimos" style="margin-top:10px"></div>
+
+    <p class="credit">M-Carreira · FIFA 21 · versão 2.7 · arquivo local</p>
+  </section>
+
+  <!-- QUADRO -->
+  <section class="view" id="v-quadro">
+    <div class="panel">
+      <div class="eyebrow">Central do treinador</div>
+      <h2>Quadro de avisos</h2>
+      <p class="intro">Guarde ideias táticas, mudanças de escalação, tarefas e lembretes. Os avisos ficam salvos neste dispositivo.</p>
+
+      <label for="qTitulo">Título do aviso</label>
+      <input class="fld" id="qTitulo" type="text" maxlength="80" placeholder="Ex.: Testar 4-2-3-1 na próxima partida" autocomplete="off">
+
+      <label for="qCategoria">Categoria</label>
+      <select class="fld" id="qCategoria">
+        <option>Tática</option>
+        <option>Escalação</option>
+        <option>Tarefa</option>
+        <option>Lembrete</option>
+        <option>Ideia</option>
+      </select>
+
+      <label for="qTexto">Anotação</label>
+      <textarea class="fld" id="qTexto" placeholder="Detalhes, ideias, decisões ou pontos para observar..."></textarea>
+
+      <button class="add" id="qAdd" type="button">Adicionar ao quadro</button>
+    </div>
+
+    <div class="saved-h">
+      <h2>Avisos guardados</h2>
+      <span class="pill" id="qCount">0 avisos</span>
+    </div>
+    <div class="notes" id="qLista"></div>
+
+    <p class="credit">M-Carreira · FIFA 21 · versão 2.7 · arquivo local</p>
+  </section>
+
+  <!-- CENTRAL DO ELENCO -->
+  <section class="view" id="v-elenco">
+    <div class="panel">
+      <div class="eyebrow">Mansfield Town · FIFA 21</div>
+      <h2>Central do Elenco</h2>
+      <p class="intro">Referência histórica: atualização de 26 de outubro de 2020. Os dados originais podem ser editados; jogadores também podem ser adicionados ou removidos.</p>
+      <span class="chip" id="eCount">0 jogadores</span>
+      <div class="tabs" id="eTabs">
+        <button class="tab on" data-tab="tatico">Esquema tático</button>
+        <button class="tab" data-tab="status">Status</button>
+        <button class="tab" data-tab="fin">Finanças</button>
+      </div>
+
+      <div id="tab-tatico">
+        <div class="sub">
+          <span class="chip">Mansfield Town · Titulares e banco</span>
+          <select class="fld" id="eForm"></select>
+          <div class="pitch2" id="eCampo"></div>
+          <p class="intro">Toque em uma camisa para selecioná-la. Depois escolha um jogador para trocar ou uma nova função.</p>
+          <div class="selbar" id="eSelBar"></div>
+        </div>
+
+        <div class="sub">
+          <h3>Editar escalação</h3>
+          <p class="intro">Escolha uma vaga no campo e atribua um jogador. Se ele já estiver em outra vaga, os jogadores trocam de lugar.</p>
+          <label for="eVaga">Vaga no campo</label>
+          <select class="fld" id="eVaga"></select>
+          <label for="eJog">Jogador</label>
+          <select class="fld" id="eJog"></select>
+          <button class="btn2 main" id="eAtrib" type="button">Atribuir jogador</button>
+          <button class="btn2" id="eRest" type="button">Restaurar escalação inicial</button>
+        </div>
+
+        <div class="sub">
+          <h3>Banco de reservas</h3>
+          <p class="intro">Toque em um reserva para selecioná-lo e depois escolha uma vaga no campo para fazer a substituição.</p>
+          <div class="bg" id="eBanco"></div>
+        </div>
+
+        <div class="sub">
+          <h3>Não relacionados</h3>
+          <div class="bg" id="eFora"></div>
+        </div>
+
+        <input class="fld" id="eBusca" type="search" placeholder="Buscar jogador..." autocomplete="off">
+        <select class="fld" id="eCat">
+          <option value="">Todas as posições</option>
+          <option value="G">Goleiros</option>
+          <option value="D">Defensores</option>
+          <option value="M">Meio-campistas</option>
+          <option value="A">Atacantes</option>
+        </select>
+        <button class="btn2 main" id="eAdd" type="button">+ Adicionar jogador</button>
+        <p class="fonte">Fonte de referência: SoFIFA e Transfermarkt. As fontes podem divergir entre atualizações; os campos não confirmados ficam identificados.</p>
+      </div>
+
+      <div id="tab-status" hidden=""><div class="sub"><h3>Status</h3><p class="intro">Toque em um jogador para editar.</p><div id="eStatus"></div></div></div>
+      <div id="tab-fin" hidden=""><div class="sub"><h3>Finanças</h3><p class="intro">Toque em um jogador para editar.</p><div id="eFin"></div></div></div>
+    </div>
+
+    <div class="panel" id="jForm" hidden="" style="margin-top:24px">
+      <h2 class="m">Adicionar / editar jogador</h2>
+      <p class="intro">Edite os dados de referência e os detalhes da carreira. Ao salvar, a Central do Elenco retorna à aba atual.</p>
+      <div class="fg" id="jCampos"></div>
+      <label for="f_obs">Observações / status na carreira</label>
+      <textarea class="fld" id="f_obs" style="min-height:150px" placeholder="Notas opcionais"></textarea>
+      <button class="add" id="jSalvar" type="button">Salvar jogador</button>
+      <button class="btn2" id="jCancelar" type="button" style="margin-top:18px">Cancelar</button>
+      <button class="btn2 del" id="jExcluir" type="button" hidden="">Excluir jogador</button>
+    </div>
+
+    <p class="credit">M-Carreira · FIFA 21 · versão 2.7 · arquivo local</p>
+  </section>
+
+  <!-- PARTIDAS -->
+  <section class="view" id="v-partidas">
+    <div class="panel">
+      <div class="phead"><h2>Registrar partida</h2><span class="chip" style="margin:0">Pós-jogo</span></div>
+      <p class="intro">Escolha jogadores do elenco e registre os acontecimentos por toque. Os dados ficam em rascunho neste dispositivo enquanto você preenche.</p>
+      <div class="ptabs" id="pTabs">
+        <button class="pab on" type="button" data-s="sec-jogo">1 · Jogo</button>
+        <button class="pab" type="button" data-s="sec-ev">2 · Eventos</button>
+        <button class="pab" type="button" data-s="sec-est">3 · Estatísticas</button>
+        <button class="pab" type="button" data-s="sec-notas">4 · Notas</button>
+      </div>
+
+      <div id="sec-jogo" class="fg">
+        <div><label for="pTemp">Temporada atual</label><input class="fld" id="pTemp" type="text" placeholder="Ex.: 2020/2021" autocomplete="off"></div>
+        <div><label for="pComp">Competição</label><input class="fld" id="pComp" type="text" placeholder="Ex.: League Two" autocomplete="off"></div>
+        <div><label for="pAdv">Adversário cadastrado</label><input class="fld" id="pAdv" type="text" list="pTimes" placeholder="Busque ou digite" autocomplete="off"><datalist id="pTimes"></datalist></div>
+        <div><label for="pMando">Mando</label><select class="fld" id="pMando"><option>Casa</option><option>Fora</option></select></div>
+        <div><label for="pRod">Rodada (opcional)</label><input class="fld" id="pRod" type="text" placeholder="Ex.: Rodada 12" autocomplete="off"></div>
+        <div><label for="pData">Data (opcional)</label><input class="fld" id="pData" type="date"></div>
+        <div><label for="pGM">Gols Mansfield</label><input class="fld" id="pGM" type="number" min="0" inputmode="numeric"></div>
+        <div><label for="pGA">Gols adversário</label><input class="fld" id="pGA" type="number" min="0" inputmode="numeric"></div>
+      </div>
+
+      <div class="sub" id="sec-ev">
+        <div class="phead"><h3>Eventos da partida</h3><span class="chip" id="evCount" style="margin:0">0 eventos</span></div>
+        <p class="intro">Gols e assistências, substituições e lesões. Os nomes são escolhidos a partir da escalação e do elenco, não digitados.</p>
+        <div class="eg">
+          <button class="btn2 main" id="bGol" type="button">⚽ Adicionar gol</button>
+          <button class="btn2" id="bSub" type="button">⇄ Substituição</button>
+          <button class="btn2" id="bLes" type="button">+ Registrar lesão</button>
+          <button class="btn2" id="bLimp" type="button">Limpar seleção</button>
+        </div>
+
+        <div class="evf" id="fGol" hidden="">
+          <div class="phead"><h3>Registrar gol</h3><button class="btn3" type="button" data-fecha="">Fechar</button></div>
+          <div class="fg">
+            <div><label for="gJog">Quem marcou?</label><select class="fld" id="gJog"></select></div>
+            <div><label for="gAss">Assistência</label><select class="fld" id="gAss"></select></div>
+            <div><label for="gMin">Minuto</label><input class="fld" id="gMin" type="number" min="0" inputmode="numeric" placeholder="Ex.: 26"></div>
+          </div>
+          <button class="add" id="aGol" type="button">Adicionar evento</button>
+        </div>
+
+        <div class="evf" id="fSub" hidden="">
+          <div class="phead"><h3>Registrar substituição</h3><button class="btn3" type="button" data-fecha="">Fechar</button></div>
+          <div class="fg">
+            <div><label for="sSai">Quem saiu?</label><select class="fld" id="sSai"></select></div>
+            <div><label for="sEnt">Quem entrou?</label><select class="fld" id="sEnt"></select></div>
+            <div><label for="sMin">Minuto</label><input class="fld" id="sMin" type="number" min="0" inputmode="numeric" placeholder="Ex.: 65"></div>
+          </div>
+          <button class="add" id="aSub" type="button">Adicionar evento</button>
+        </div>
+
+        <div class="evf" id="fLes" hidden="">
+          <div class="phead"><h3>Registrar lesão</h3><button class="btn3" type="button" data-fecha="">Fechar</button></div>
+          <div class="fg">
+            <div><label for="lJog">Jogador lesionado</label><select class="fld" id="lJog"></select></div>
+            <div><label for="lMin">Minuto</label><input class="fld" id="lMin" type="number" min="0" inputmode="numeric" placeholder="Ex.: 72"></div>
+          </div>
+          <label for="lObs">Observação (opcional)</label>
+          <input class="fld" id="lObs" type="text" placeholder="Ex.: saiu com desconforto muscular" autocomplete="off">
+          <button class="add" id="aLes" type="button">Adicionar evento</button>
+        </div>
+
+        <div class="evl" id="evList"></div>
+      </div>
+
+      <div class="sub" id="sec-est">
+        <h3>Estatísticas do jogo</h3>
+        <div class="fg">
+          <div><label for="xFM">Finalizações Mansfield</label><input class="fld" id="xFM" type="number" min="0" inputmode="numeric"></div>
+          <div><label for="xFA">Finalizações adversário</label><input class="fld" id="xFA" type="number" min="0" inputmode="numeric"></div>
+          <div><label for="xCM">Chutes certos Mansfield</label><input class="fld" id="xCM" type="number" min="0" inputmode="numeric"></div>
+          <div><label for="xCA">Chutes certos adversário</label><input class="fld" id="xCA" type="number" min="0" inputmode="numeric"></div>
+          <div><label for="xPM">Posse Mansfield (%)</label><input class="fld" id="xPM" type="number" min="0" max="100" inputmode="numeric"></div>
+          <div><label for="xPA">Posse adversário (%)</label><input class="fld" id="xPA" type="number" min="0" max="100" inputmode="numeric"></div>
+          <div><label for="xQM">Precisão passes Mansfield (%)</label><input class="fld" id="xQM" type="number" min="0" max="100" inputmode="numeric"></div>
+          <div><label for="xQA">Precisão passes adversário (%)</label><input class="fld" id="xQA" type="number" min="0" max="100" inputmode="numeric"></div>
+        </div>
+      </div>
+
+      <div class="sub" id="sec-notas">
+        <div class="phead"><h3>Notas dos participantes</h3><button class="btn3" id="nAtu" type="button">Atualizar lista</button></div>
+        <p class="intro">Somente titulares e reservas que participaram (incluindo quem entrou). Informe nota de 0 a 10; quem não tiver nota pode ficar vazio.</p>
+        <div id="nList"></div>
+        <p class="fonte">A lista de notas será montada com a escalação e as substituições registradas.</p>
+      </div>
+
+      <label for="pObs">Observações do treinador</label>
+      <textarea class="fld" id="pObs" placeholder="Como o time jogou? O que funcionou? Quem se destacou?"></textarea>
+      <button class="add" id="pSalvar" type="button">Salvar partida</button>
+      <button class="btn2" id="pNovo" type="button" style="display:inline-block;width:auto;margin:18px 0 0;padding:20px 28px">Nova partida / limpar</button>
+      <p class="pmsg" id="pMsg"></p>
+      <p class="fonte">O formulário salva um rascunho local automaticamente enquanto você preenche.</p>
+    </div>
+
+    <div class="panel" style="margin-top:24px">
+      <button class="hh" id="hHead" type="button"><h2>Histórico de partidas</h2><span class="chip" id="hCount" style="margin:0">0 partidas</span></button>
+      <div id="hBody" hidden=""><div id="hList"></div></div>
+    </div>
+
+    <p class="credit">M-Carreira · FIFA 21 · versão 2.7 · arquivo local</p>
+  </section>
+
+  <!-- ESTATÍSTICAS -->
+  <section class="view" id="v-estatisticas">
+    <div class="panel">
+      <div class="eyebrow">Mansfield Town</div>
+      <div class="phead"><h2>Estatísticas da temporada</h2><span class="chip" style="margin:0">Automáticas</span></div>
+      <p class="intro">Os números são calculados a partir das partidas salvas. Escolha uma competição para filtrar os dados; “Todas” mostra a temporada completa.</p>
+      <div class="fg">
+        <div><label for="tTemp">Temporada</label><select class="fld" id="tTemp"></select></div>
+        <div><label for="tComp">Competição</label><select class="fld" id="tComp"></select></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="phead"><h2>Desempenho da equipe</h2><button class="btn3" type="button" data-ed="eq">Editar estatísticas</button></div>
+      <div id="tEq"></div>
+    </div>
+
+    <div class="panel">
+      <div class="phead"><h2>Artilharia</h2><button class="btn3" type="button" data-ed="art">Editar artilharia</button></div>
+      <p class="intro">Gols e assistências identificados nos eventos estruturados das partidas. Você pode corrigir os números manualmente.</p>
+      <div id="tArt"></div>
+    </div>
+
+    <div class="panel">
+      <div class="phead"><h2>Participações e notas</h2><button class="btn3" type="button" data-ed="jog">Editar jogadores</button></div>
+      <p class="intro">Jogos contabilizados a partir de notas e eventos registrados; médias usam as notas informadas. Os números podem ser corrigidos manualmente.</p>
+      <div id="tJog"></div>
+    </div>
+
+    <div class="panel">
+      <h2 style="margin-bottom:0">Histórico por competição</h2>
+      <div id="tHist"></div>
+    </div>
+    <p class="fonte" style="font-size:1.4rem;margin:30px 6px">Partidas antigas sem temporada informada são associadas à temporada atual. Eventos registrados apenas como texto livre não são interpretados automaticamente para a artilharia; edite a partida e registre os eventos para incluí-los.</p>
+
+    <p class="credit">M-Carreira · FIFA 21 · versão 2.7 · arquivo local</p>
+  </section>
+
+  <!-- BASE -->
+  <section class="view" id="v-base">
+    <div class="panel">
+      <div class="phead"><h2>Academia de jovens</h2><button class="chip" id="bT1" type="button" style="margin:0">0 jovens</button></div>
+      <div id="bB1">
+        <p class="intro">Adicione jogadores que chegarem à base, edite seus dados ou remova quem for promovido ou liberado. GER e potencial são os informados no seu save.</p>
+        <h3 class="sh3" id="bFTit">Adicionar jogador à base</h3>
+        <div class="fg">
+          <div><label for="bNome">Nome</label><input class="fld" id="bNome" type="text" placeholder="Nome do jovem" autocomplete="off"></div>
+          <div><label for="bPos">Posição / plano de posição</label><input class="fld" id="bPos" type="text" placeholder="Ex.: MC → MEI" autocomplete="off"></div>
+          <div><label for="bIdade">Idade</label><input class="fld" id="bIdade" type="number" min="0" inputmode="numeric"></div>
+          <div><label for="bGer">GER atual</label><input class="fld" id="bGer" type="number" min="0" inputmode="numeric"></div>
+          <div><label for="bPot">Potencial</label><input class="fld" id="bPot" type="text" placeholder="Ex.: 84–94" autocomplete="off"></div>
+        </div>
+        <label for="bObs">Observações</label>
+        <textarea class="fld" id="bObs" style="min-height:150px" placeholder="Perfil, status na base, decisão de promoção..."></textarea>
+        <button class="add" id="bAdd" type="button">Adicionar à base</button>
+        <button class="btn3" id="bCanc" type="button" hidden="" style="margin-left:12px">Cancelar</button>
+        <div id="bList"></div>
+      </div>
+    </div>
+
+    <div class="panel">
+      <div class="phead"><h2>Plano de desenvolvimento</h2><button class="chip" id="plT" type="button" style="margin:0">0 planos</button></div>
+      <div id="plB">
+        <p class="intro">Registre o treinamento ou objetivo individual de cada jogador. Os planos podem ser adicionados, alterados ou excluídos separadamente da ficha da academia.</p>
+        <h3 class="sh3" id="plFTit">Adicionar plano</h3>
+        <label for="plJog">Jogador</label>
+        <input class="fld" id="plJog" type="text" list="plJogs" placeholder="Nome do jogador" autocomplete="off">
+        <datalist id="plJogs"></datalist>
+        <label for="plTxt">Plano / objetivo</label>
+        <textarea class="fld" id="plTxt" style="min-height:190px" placeholder="Ex.: converter de MC para MEI; treinar finalização; reavaliar em duas semanas."></textarea>
+        <button class="add" id="plAdd" type="button">Adicionar plano</button>
+        <button class="btn3" id="plCanc" type="button" hidden="" style="margin-left:12px">Cancelar</button>
+        <div id="plList"></div>
+      </div>
+    </div>
+
+    <p class="credit">M-Carreira · FIFA 21 · versão 2.7 · arquivo local</p>
+  </section>
+
+  <!-- MERCADO -->
+  <section class="view" id="v-mercado">
+    <div class="panel">
+      <h2 style="margin-bottom:0">Movimentações registradas</h2>
+      <div id="mList" style="margin-top:14px"></div>
+    </div>
+
+    <div class="panel">
+      <h2>Registrar movimentação</h2>
+      <div class="fg">
+        <div><label for="mTipo">Tipo</label>
+          <select class="fld" id="mTipo">
+            <option>Contratação</option><option>Venda</option><option>Troca</option>
+            <option>Empréstimo recebido</option><option>Empréstimo cedido</option>
+          </select></div>
+        <div id="mJogBox"><label for="mJog">Jogador</label><input class="fld" id="mJog" type="text" autocomplete="off"></div>
+        <div><label for="mClube">Clube envolvido</label><input class="fld" id="mClube" type="text" autocomplete="off"></div>
+        <div><label for="mValor">Valor / moeda</label><input class="fld" id="mValor" type="text" placeholder="Ex.: £240.000" autocomplete="off"></div>
+        <div><label for="mRev">Cláusula de revenda (%)</label><input class="fld" id="mRev" type="number" min="0" max="100" inputmode="numeric"></div>
+        <div><label for="mData">Data (opcional)</label><input class="fld" id="mData" type="date"></div>
+      </div>
+
+      <div id="mElBox">
+        <label for="mBusca" id="mElLab">Jogadores do elenco</label>
+        <input class="fld" id="mBusca" type="search" placeholder="Buscar no elenco..." autocomplete="off" style="margin-bottom:14px">
+        <div class="cl" id="mCl"></div>
+      </div>
+
+      <label for="mDet">Detalhes</label>
+      <textarea class="fld" id="mDet" style="min-height:170px" placeholder="Jogadores envolvidos, empréstimo, duração, observações..."></textarea>
+
+      <label class="ck" id="mAddBox"><input type="checkbox" id="mAdd" checked=""> Adicionar o jogador que chega ao elenco</label>
+
+      <button class="add" id="mSalvar" type="button">Salvar movimentação</button>
+      <p class="pmsg" id="mMsg"></p>
+    </div>
+
+    <p class="credit">M-Carreira · FIFA 21 · versão 2.7 · arquivo local</p>
+  </section>
+
+  <!-- BACKUP -->
+  <section class="view" id="v-backup">
+    <div class="panel">
+      <h2>Backup e restauração</h2>
+      <p class="intro">Faça cópias independentes da carreira. O backup de dados guarda tudo o que você registrou. O backup completo guarda também o aplicativo, com todas as telas e funções como estão agora.</p>
+      <button class="bb main" id="bkHtml" type="button">Exportar aplicativo completo (.html)</button>
+      <button class="bb" id="bkJson" type="button">Exportar somente dados (.json)</button>
+      <button class="bb" id="bkImp" type="button">Importar backup de dados</button>
+      <input type="file" id="bkFile" accept=".json,.html,application/json,text/html" hidden="">
+      <p class="pmsg" id="bkMsg"></p>
+      <div id="bkLink"></div>
+      <div id="bkInfo" style="margin-top:22px"></div>
+      <p class="bkn"><b>Dados (.json):</b> partidas, elenco, escalação e formações criadas, base, planos, mercado, avisos, estatísticas corrigidas e o rascunho da partida. É um arquivo leve, ideal para guardar com frequência.</p>
+      <p class="bkn"><b>Completo (.html):</b> o aplicativo exatamente como está no momento do backup, com todas as telas, comandos e os dados registrados. Ao abrir esse arquivo, ele já traz a carreira de volta.</p>
+      <p class="bkn"><b>Para restaurar:</b> toque em Importar backup de dados e escolha o .json (ou um .html completo). A importação substitui os dados atuais.</p>
+      <p class="bkn">No Android, o arquivo vai para a pasta Downloads. Se o download não começar sozinho, use o link que aparece acima e mantenha-o pressionado para salvar.</p>
+    </div>
+
+    <div class="panel">
+      <h2>Limpar dados locais</h2>
+      <p class="intro">Atenção: esta ação apaga os registros salvos neste navegador. Exporte o backup antes.</p>
+      <button class="bb del" id="bkApagar" type="button">Apagar dados locais</button>
+    </div>
+
+    <p class="credit">M-Carreira · FIFA 21 · versão 2.7 · arquivo local</p>
+  </section>
+
+  <!-- Telas ainda não construídas -->
+  <section class="view" id="v-outras">
+    <div class="empty">
+      <h2 id="outraTitulo"></h2>
+      <p>Esta tela ainda não foi construída. A tela inicial já está pronta; me diga o que esta seção precisa fazer e eu implemento.</p>
+    </div>
+  </section>
+</main>
+
+<nav id="nav">
+  <button data-go="inicio" class="on"><span class="i">⌂</span>Início</button>
+  <button data-go="quadro"><span class="i">▤</span>Quadro</button>
+  <button data-go="partidas"><span class="i">⚽</span>Partidas</button>
+  <button data-go="estatisticas"><span class="i">📊</span>Estatísticas</button>
+  <button data-go="elenco"><span class="i">👥</span>Central do Elenco</button>
+  <button data-go="base"><span class="i">🌱</span>Base</button>
+  <button data-go="mercado"><span class="i">⇄</span>Mercado</button>
+  <button data-go="backup"><span class="i">▣</span>Backup</button>
+</nav>
+
+<script id="mc-backup" type="application/json">{"app":"M-Carreira","formato":1,"tipo":"completo","criado":"2026-11-04T15:31:49.354Z","dados":{"partidas":[{"id":1793793181124,"criado":1793793181125,"temporada":"2020","competicao":"Pré-Temporada 2020","adversario":"Ross County","mando":"Fora","rodada":"","data":"2020-07-05","gm":3,"ga":0,"placar":"3 – 0","ev":[{"t":"gol","jog":10,"ass":7,"min":22,"txt":"⚽ Gol: Jordan Bowery (assistência: George Lapslie)"},{"t":"gol","jog":10,"ass":44,"min":37,"txt":"⚽ Gol: Jordan Bowery (assistência: Danny Rose)"},{"t":"sub","sai":2,"ent":17,"min":46,"txt":"⇄ Entrou Jason Law, saiu Malvind Benning"},{"t":"sub","sai":5,"ent":31,"min":46,"txt":"⇄ Entrou James Clarke, saiu Corey O'Keeffe"},{"t":"sub","sai":7,"ent":20,"min":67,"txt":"⇄ Entrou Keaton Ward, saiu George Lapslie"},{"t":"sub","sai":6,"ent":28,"min":67,"txt":"⇄ Entrou Kellan Gordon, saiu Harry Charsley"},{"t":"sub","sai":10,"ent":18,"min":67,"txt":"⇄ Entrou Jamie Reid, saiu Jordan Bowery"},{"t":"gol","jog":18,"ass":8,"min":79,"txt":"⚽ Gol: Jamie Reid (assistência: George Maris)"}],"stats":{"fin":["8","8"],"ch":["5","5"],"posse":["41","59"],"passes":["84","81"]},"notas":[{"id":1,"nome":"Aidan Stone","nota":"9.2"},{"id":2,"nome":"Malvind Benning","nota":"7.3"},{"id":3,"nome":"Ryan Sweeney","nota":"8.2"},{"id":4,"nome":"James Perch","nota":"7.1"},{"id":5,"nome":"Corey O'Keeffe","nota":"6.6"},{"id":6,"nome":"Harry Charsley","nota":"7.7"},{"id":25,"nome":"Ollie Clarke","nota":"7.6"},{"id":8,"nome":"George Maris","nota":"7.9"},{"id":7,"nome":"George Lapslie","nota":"7.1"},{"id":10,"nome":"Jordan Bowery","nota":"10"},{"id":44,"nome":"Danny Rose","nota":"7.2"},{"id":17,"nome":"Jason Law","nota":"6.6"},{"id":31,"nome":"James Clarke","nota":"6.7"},{"id":20,"nome":"Keaton Ward","nota":"6.1"},{"id":28,"nome":"Kellan Gordon","nota":"6.9"},{"id":18,"nome":"Jamie Reid","nota":"7.8"}],"escal":{"formacao":"4-1-2-1-2","titulares":["Aidan Stone","Malvind Benning","Ryan Sweeney","James Perch","Corey O'Keeffe","Harry Charsley","Ollie Clarke","George Maris","George Lapslie","Jordan Bowery","Danny Rose"]},"obs":"Observação; Meia ofensivo deles, Charsles-Cook um ótimo jogador, ofensivo e habilidoso."},{"id":1793793814371,"criado":1793793814371,"temporada":"2020","competicao":"Pré-Temporada 2020","adversario":"ADO  Den Haag","mando":"Fora","rodada":"","data":"2020-07-08","gm":1,"ga":0,"placar":"1 – 0","ev":[{"t":"sub","sai":5,"ent":28,"min":46,"txt":"⇄ Entrou Kellan Gordon, saiu Corey O'Keeffe"},{"t":"sub","sai":8,"ent":17,"min":60,"txt":"⇄ Entrou Jason Law, saiu George Maris"},{"t":"sub","sai":25,"ent":31,"min":60,"txt":"⇄ Entrou James Clarke, saiu Ollie Clarke"},{"t":"gol","jog":18,"ass":2,"min":87,"txt":"⚽ Gol: Jamie Reid (assistência: Malvind Benning)"},{"t":"sub","sai":6,"ent":18,"min":60,"txt":"⇄ Entrou Jamie Reid, saiu Harry Charsley"}],"stats":{"fin":["",""],"ch":["",""],"posse":["",""],"passes":["",""]},"notas":[{"id":1,"nome":"Aidan Stone","nota":"9.6"},{"id":2,"nome":"Malvind Benning","nota":"7.1"},{"id":3,"nome":"Ryan Sweeney","nota":"6.8"},{"id":4,"nome":"James Perch","nota":"7.2"},{"id":5,"nome":"Corey O'Keeffe","nota":"7.4"},{"id":6,"nome":"Harry Charsley","nota":"6.5"},{"id":25,"nome":"Ollie Clarke","nota":"6.9"},{"id":8,"nome":"George Maris","nota":"7.0"},{"id":7,"nome":"George Lapslie","nota":"6.9"},{"id":10,"nome":"Jordan Bowery","nota":"6.7"},{"id":44,"nome":"Danny Rose","nota":"6.7"},{"id":28,"nome":"Kellan Gordon","nota":"6.0"},{"id":17,"nome":"Jason Law","nota":"7.0"},{"id":31,"nome":"James Clarke","nota":"6.6"},{"id":18,"nome":"Jamie Reid","nota":"7.4"}],"escal":{"formacao":"4-1-2-1-2","titulares":["Aidan Stone","Malvind Benning","Ryan Sweeney","James Perch","Corey O'Keeffe","Harry Charsley","Ollie Clarke","George Maris","George Lapslie","Jordan Bowery","Danny Rose"]},"obs":"Jogamos mal, demos espaços e finalizamos muito mal, temos que melhorar."},{"id":1793794754329,"criado":1793794754329,"temporada":"2020","competicao":"Pré-Temporada 2020","adversario":"Hamilton","mando":"Fora","rodada":"","data":"2020-07-12","gm":3,"ga":1,"placar":"3 – 1","ev":[{"t":"sub","sai":2,"ent":17,"min":0,"txt":"⇄ Entrou Jason Law, saiu Malvind Benning"},{"t":"sub","sai":44,"ent":18,"min":0,"txt":"⇄ Entrou Jamie Reid, saiu Danny Rose"},{"t":"gol","jog":18,"ass":6,"min":8,"txt":"⚽ Gol: Jamie Reid (assistência: Harry Charsley)"},{"t":"gol","jog":17,"ass":43,"min":51,"txt":"⚽ Gol: Jason Law (assistência: Brandon Goodship)"},{"t":"sub","sai":10,"ent":44,"min":52,"txt":"⇄ Entrou Danny Rose, saiu Jordan Bowery"},{"t":"sub","sai":7,"ent":2,"min":51,"txt":"⇄ Entrou Malvind Benning, saiu George Lapslie"},{"t":"sub","sai":17,"ent":4,"min":51,"txt":"⇄ Entrou James Perch, saiu Jason Law"},{"t":"gol","jog":-1,"ass":0,"min":54,"txt":"⚽ Gol do adversário"},{"t":"gol","jog":18,"ass":43,"min":87,"txt":"⚽ Gol: Jamie Reid (assistência: Brandon Goodship)"},{"t":"sub","sai":7,"ent":43,"min":0,"txt":"⇄ Entrou Brandon Goodship, saiu George Lapslie"},{"t":"sub","sai":4,"ent":13,"min":0,"txt":"⇄ Entrou Farrend Rawson, saiu James Perch"},{"t":"sub","sai":6,"ent":7,"min":46,"txt":"⇄ Entrou George Lapslie, saiu Harry Charsley"},{"t":"sub","sai":5,"ent":31,"min":46,"txt":"⇄ Entrou James Clarke, saiu Corey O'Keeffe"},{"t":"sub","sai":25,"ent":28,"min":46,"txt":"⇄ Entrou Kellan Gordon, saiu Ollie Clarke"}],"stats":{"fin":["14","5"],"ch":["8","3"],"posse":["49","51"],"passes":["91","83"]},"notas":[{"id":1,"nome":"Aidan Stone","nota":"8.6"},{"id":2,"nome":"Malvind Benning","nota":"6.9"},{"id":3,"nome":"Ryan Sweeney","nota":"6.7"},{"id":4,"nome":"James Perch","nota":"5.7"},{"id":5,"nome":"Corey O'Keeffe","nota":"6.1"},{"id":6,"nome":"Harry Charsley","nota":"6.9"},{"id":25,"nome":"Ollie Clarke","nota":"6.2"},{"id":8,"nome":"George Maris","nota":"7.8"},{"id":7,"nome":"George Lapslie","nota":"6.2"},{"id":10,"nome":"Jordan Bowery","nota":"7.1"},{"id":44,"nome":"Danny Rose","nota":"6.3"},{"id":17,"nome":"Jason Law","nota":"8.2"},{"id":18,"nome":"Jamie Reid","nota":"9.6"},{"id":43,"nome":"Brandon Goodship","nota":"8.1"},{"id":13,"nome":"Farrend Rawson","nota":"7.2"},{"id":31,"nome":"James Clarke","nota":"7.1"},{"id":28,"nome":"Kellan Gordon","nota":"6.6"}],"escal":{"formacao":"4-1-2-1-2","titulares":["Aidan Stone","Malvind Benning","Ryan Sweeney","James Perch","Corey O'Keeffe","Harry Charsley","Ollie Clarke","George Maris","George Lapslie","Jordan Bowery","Danny Rose"]},"obs":"Nosso melhor jogo ofensivamente, começamos preservando alguns titulares."},{"id":1793796455803,"criado":1793796455803,"temporada":"2020","competicao":"Pré-Temporada 2020","adversario":"FC Emmen","mando":"Fora","rodada":"","data":"2020-07-15","gm":1,"ga":3,"placar":"1 – 3","ev":[{"t":"sub","sai":8,"ent":40,"min":0,"txt":"⇄ Entrou Stephen Quinn, saiu George Maris"},{"t":"sub","sai":2,"ent":32,"min":0,"txt":"⇄ Entrou Stephen McLaughlin, saiu Malvind Benning"},{"t":"sub","sai":5,"ent":28,"min":0,"txt":"⇄ Entrou Kellan Gordon, saiu Corey O'Keeffe"},{"t":"gol","jog":44,"ass":7,"min":29,"txt":"⚽ Gol: Danny Rose (assistência: George Lapslie)"},{"t":"gol","jog":-1,"ass":0,"min":41,"txt":"⚽ Gol do adversário"},{"t":"sub","sai":6,"ent":22,"min":46,"txt":"⇄ Entrou Oliver Šarkić, saiu Harry Charsley"},{"t":"sub","sai":10,"ent":18,"min":61,"txt":"⇄ Entrou Jamie Reid, saiu Jordan Bowery"},{"t":"sub","sai":7,"ent":43,"min":61,"txt":"⇄ Entrou Brandon Goodship, saiu George Lapslie"},{"t":"gol","jog":-1,"ass":0,"min":69,"txt":"⚽ Gol do adversário"},{"t":"gol","jog":-1,"ass":0,"min":82,"txt":"⚽ Gol do adversário"},{"t":"sub","sai":3,"ent":13,"min":0,"txt":"⇄ Entrou Farrend Rawson, saiu Ryan Sweeney"}],"stats":{"fin":["8","7"],"ch":["3","4"],"posse":["41","59"],"passes":["85","90"]},"notas":[{"id":1,"nome":"Aidan Stone","nota":"5.7"},{"id":4,"nome":"James Perch","nota":"7.0"},{"id":6,"nome":"Harry Charsley","nota":"7.0"},{"id":25,"nome":"Ollie Clarke","nota":"6.1"},{"id":7,"nome":"George Lapslie","nota":"7.3"},{"id":10,"nome":"Jordan Bowery","nota":"6.4"},{"id":44,"nome":"Danny Rose","nota":"8.1"},{"id":40,"nome":"Stephen Quinn","nota":"7.1"},{"id":32,"nome":"Stephen McLaughlin","nota":"7.0"},{"id":28,"nome":"Kellan Gordon","nota":"6.1"},{"id":22,"nome":"Oliver Šarkić","nota":"6.3"},{"id":18,"nome":"Jamie Reid","nota":"6.3"},{"id":43,"nome":"Brandon Goodship","nota":"5.8"},{"id":13,"nome":"Farrend Rawson","nota":"6.8"}],"escal":{"formacao":"4-1-2-1-2","titulares":["Aidan Stone","Malvind Benning","Ryan Sweeney","James Perch","Corey O'Keeffe","Harry Charsley","Ollie Clarke","George Maris","George Lapslie","Jordan Bowery","Danny Rose"]},"obs":"Jogamos muito mal, erramos gols claros no começo e no final ficamos apaticos e lentos."},{"id":1793802827792,"criado":1793802827792,"temporada":"2020","competicao":"League Two","adversario":"Bradford City","mando":"Casa","rodada":"Rodada 01","data":"2020-08-01","gm":1,"ga":2,"placar":"1 – 2","ev":[{"t":"gol","jog":-1,"ass":0,"min":15,"txt":"⚽ Gol do adversário"},{"t":"gol","jog":-1,"ass":0,"min":66,"txt":"⚽ Gol do adversário"},{"t":"sub","sai":5,"ent":17,"min":66,"txt":"⇄ Entrou Jason Law, saiu Corey O'Keeffe"},{"t":"sub","sai":10,"ent":18,"min":66,"txt":"⇄ Entrou Jamie Reid, saiu Jordan Bowery"},{"t":"sub","sai":6,"ent":43,"min":66,"txt":"⇄ Entrou Brandon Goodship, saiu Harry Charsley"},{"t":"gol","jog":43,"ass":18,"min":82,"txt":"⚽ Gol: Brandon Goodship (assistência: Jamie Reid)"}],"stats":{"fin":["4","12"],"ch":["4","8"],"posse":["39","61"],"passes":["80","89"]},"notas":[{"id":1,"nome":"Aidan Stone","nota":"8.5"},{"id":2,"nome":"Malvind Benning","nota":"6.1"},{"id":3,"nome":"Ryan Sweeney","nota":"6.8"},{"id":4,"nome":"James Perch","nota":"6.8"},{"id":5,"nome":"Corey O'Keeffe","nota":"6.2"},{"id":6,"nome":"Harry Charsley","nota":"6.6"},{"id":25,"nome":"Ollie Clarke","nota":"6.3"},{"id":8,"nome":"George Maris","nota":"6.7"},{"id":7,"nome":"George Lapslie","nota":"6.5"},{"id":10,"nome":"Jordan Bowery","nota":"6.8"},{"id":44,"nome":"Danny Rose","nota":"6.3"},{"id":17,"nome":"Jason Law","nota":"6.6"},{"id":18,"nome":"Jamie Reid","nota":"6.7"},{"id":43,"nome":"Brandon Goodship","nota":"8.0"}],"escal":{"formacao":"4-1-2-1-2","titulares":["Aidan Stone","Malvind Benning","Ryan Sweeney","James Perch","Corey O'Keeffe","Harry Charsley","Ollie Clarke","George Maris","George Lapslie","Jordan Bowery","Danny Rose"]},"obs":"Jogamos muito mal, inicio do segundo tempo horrível."}],"avisos":[],"base":[],"mercado":[{"id":1793791304140,"tipo":"Contratação","jogador":"Brandon Goodship","clube":"Southend United","valor":"€ 70 mil","revenda":"","data":"","detalhes":"Uma troca de Goodship por Stech, com o adicional de € 70 mil.\nContratação da pré temporada.","saidas":[{"modo":"rem","id":42,"nome":"Marek Stech","snap":{"id":42,"nome":"Marek Stech","pos":"GOL","idade":"30","ger":"63","pot":"","pe":"Não confirma","contrato":"","valor":"€ 300 mil","salario":"","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"63","div":"","han":"","kic":"","ref":"","spd":"","posi":"","nac":"","status":"","obs":""}}],"entrouId":43,"criado":1793791304140},{"id":1793791416338,"tipo":"Contratação","jogador":"Danny Rose","clube":"Northampton","valor":"€ 300 mil","revenda":"","data":"","detalhes":"Uma troca de Sinclair por Rose, com o adicional de € 300 mil.\nContratação na janela de transferências da pré temporada","saidas":[{"modo":"rem","id":30,"nome":"Tyrese Sinclair","snap":{"id":30,"nome":"Tyrese Sinclair","nac":"Inglaterra","pos":"ME / MEI / MD","idade":"19","ger":"58","pot":"71","pe":"","contrato":"2021","valor":"€475 mil","salario":"€1,8 mil","status":"Elenco principal"}}],"entrouId":44,"criado":1793791416338}],"planos":[],"elenco":{"jogadores":[{"id":5,"nome":"Corey O'Keeffe","pos":"LD","ger":"63","nac":"Irlanda","idade":"22","pot":"71","pe":"Não confirma","contrato":"2022","valor":"€1,0 mi","salario":"€3,3 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":24,"nome":"Rollin Menayese","nac":"País de Gales","pos":"ZAG","idade":"22","ger":"62","pot":"69","pe":"Não confirma","contrato":"2022","valor":"€700 mil","salario":"€3,3 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":13,"nome":"Farrend Rawson","pos":"ZAG","ger":"62","nac":"Inglaterra","idade":"23","pot":"68","pe":"Não confirma","contrato":"2022","valor":"€650 mil","salario":"€3,3 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":3,"nome":"Ryan Sweeney","pos":"ZAG","ger":"64","nac":"Irlanda","idade":"23","pot":"69","pe":"Não confirma","contrato":"2021","valor":"€700 mil","salario":"€3,3 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":2,"nome":"Malvind Benning","pos":"LE / ALA E","ger":"63","nac":"Inglaterra","idade":"26","pot":"67","pe":"Não confirma","contrato":"2021","valor":"€800 mil","salario":"€4,8 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":8,"nome":"George Maris","pos":"VOL","ger":"63","nac":"Inglaterra","idade":"24","pot":"69","pe":"Não confirma","contrato":"2022","valor":"€750 mil","salario":"€3,7 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":25,"nome":"Ollie Clarke","nac":"Inglaterra","pos":"MC","idade":"28","ger":"65","pot":"65","pe":"","contrato":"2022","valor":"€725 mil","salario":"€5,4 mil","status":"Elenco principal"},{"id":6,"nome":"Harry Charsley","pos":"MC / MEI","ger":"62","nac":"Irlanda","idade":"23","pot":"70","pe":"","contrato":"2021","valor":"€875 mil","salario":"€3,2 mil","status":"Elenco principal"},{"id":10,"nome":"Jordan Bowery","pos":"ATA","ger":"63","nac":"Inglaterra","idade":"29","pot":"63","pe":"","contrato":"2022","valor":"€475 mil","salario":"€4,8 mil","status":"Elenco principal"},{"id":26,"nome":"Andy Cook","nac":"Inglaterra","pos":"ATA","idade":"29","ger":"65","pot":"65","pe":"","contrato":"2021","valor":"€725 mil","salario":"€5,9 mil","status":"Elenco principal"},{"id":28,"nome":"Kellan Gordon","nac":"Inglaterra","pos":"MD","idade":"22","ger":"61","pot":"67","pe":"Não confirma","contrato":"2021","valor":"€500 mil","salario":"€2,7 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":18,"nome":"Jamie Reid","pos":"ATA","ger":"61","nac":"Irlanda do Norte","idade":"25","pot":"64","pe":"","contrato":"2022","valor":"€450 mil","salario":"€3,6 mil","status":"Elenco principal"},{"id":29,"nome":"Nicky Maynard","nac":"Inglaterra","pos":"ATA","idade":"33","ger":"65","pot":"65","pe":"","contrato":"2021","valor":"€450 mil","salario":"€5,7 mil","status":"Elenco principal"},{"id":31,"nome":"James Clarke","nac":"Irlanda","pos":"LD / ZAG","idade":"20","ger":"60","pot":"70","pe":"","contrato":"2021","valor":"€525 mil","salario":"€2,1 mil","status":"Elenco principal"},{"id":32,"nome":"Stephen McLaughlin","nac":"Irlanda","pos":"MC","idade":"30","ger":"64","pot":"64","pe":"Não confirma","contrato":"2021","valor":"€575 mil","salario":"€4,7 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":17,"nome":"Jason Law","pos":"MD","ger":"57","nac":"Inglaterra","idade":"21","pot":"67","pe":"Não confirma","contrato":"2021","valor":"€350 mil","salario":"€2,1 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":1,"nome":"Aidan Stone","pos":"GOL","ger":"59","nac":"Inglaterra","idade":"21","pot":"68","pe":"Não confirma","contrato":"2021","valor":"€400 mil","salario":"€1,5 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":7,"nome":"George Lapslie","pos":"MC / MEI","ger":"59","nac":"Inglaterra","idade":"22","pot":"68","pe":"","contrato":"2021","valor":"€500 mil","salario":"€2,8 mil","status":"Elenco principal"},{"id":33,"nome":"Joe Riley","nac":"Inglaterra","pos":"ALA D / LD","idade":"28","ger":"64","pot":"64","pe":"","contrato":"2021","valor":"€525 mil","salario":"€4,5 mil","status":"Elenco principal"},{"id":4,"nome":"James Perch","pos":"ZAG","ger":"62","nac":"Inglaterra","idade":"34","pot":"63","pe":"Não confirma","contrato":"2021","valor":"€160 mil","salario":"€3,9 mil","status":"Elenco principal","ritmo":"","fin":"","passe":"","drible":"","def":"","fis":"","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":"","obs":""},{"id":19,"nome":"Jake Wright","pos":"ZAG","ger":"63","nac":"Mansfield Town","idade":"34","pot":"63","pe":"","contrato":"2021","valor":"€160 mil","salario":"€3,9 mil","status":"Elenco principal"},{"id":20,"nome":"Keaton Ward","pos":"MC / MEI","ger":"54","nac":"Mansfield Town","idade":"20","pot":"68","pe":"","contrato":"2022","valor":"€250 mil","salario":"€1,6 mil","status":"Elenco principal"},{"id":37,"nome":"Josh Scott","nac":"Mansfield Town","pos":"ATA","idade":"18","ger":"54","pot":"69","pe":"","contrato":"2022","valor":"€250 mil","salario":"€1,5 mil","status":"Elenco principal"},{"id":21,"nome":"James Pardington","pos":"GOL","ger":"52","nac":"Mansfield Town","idade":"19","pot":"67","pe":"","contrato":"2021","valor":"€170 mil","salario":"€900","status":"Elenco principal"},{"id":12,"nome":"Maison Campbell","pos":"GOL","ger":"53","nac":"Mansfield Town","idade":"16","pot":"67","pe":"","contrato":"2021","valor":"€190 mil","salario":"€500","status":"Elenco principal"},{"id":22,"nome":"Oliver Šarkić","pos":"PD / MD","ger":"62","nac":"Montenegro","idade":"22","pot":"70","pe":"Direito","contrato":"2022","valor":"€900 mil","salario":"€2,1 mil","status":"Elenco principal"},{"id":40,"nome":"Stephen Quinn","nac":"Irlanda","pos":"MC / VOL","idade":"34","ger":"64","pot":"64","pe":"Esquerdo","contrato":"2021","valor":"€275 mil","salario":"€4,7 mil","status":"Emprestado"},{"id":43,"nome":"Brandon Goodship","nac":"Inglaterra","pos":"MEI","idade":"25","ger":"59","pot":"","pe":"Direito","contrato":"2024","valor":"€ 300 mil","salario":"€ 2,700 mil","status":"Reserva","obs":"Chegou ao clube em 2020, vindo do Southend United.","ritmo":"73","fin":"58","passe":"53","drible":"62","def":"19","fis":"62","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":""},{"id":44,"nome":"Danny Rose","nac":"Inglaterra","pos":"ATA","idade":"26","ger":"63","pot":"","pe":"Direito","contrato":"2023","valor":"€ 475 mil","salario":"€ 3,500","status":"Elenco principal","obs":"","ritmo":"78","fin":"62","passe":"53","drible":"64","def":"44","fis":"67","gk":"","div":"","han":"","kic":"","ref":"","spd":"","posi":""}],"formacao":"4-1-2-1-2","slots":[1,2,3,4,5,6,25,8,7,10,44],"banco":[12,13,31,17,18],"prox":45,"custom":{"4-1-2-1-2":[["GOL",50,88],["LE",14,68],["ZAG esquerda",38,72],["ZAG direita",62,72],["LD",86,68],["MC",22,43],["MC",75,43],["VOL",50,55],["MEI",48,28],["ATA central",27,11],["ATA direita",69,11]]},"v":2},"estat":{}},"rascunho":{"ev":[],"notas":{},"edit":null,"c":{"pTemp":"2020","pComp":"League Two","pAdv":"","pMando":"Fora","pRod":"","pData":"","pGM":"","pGA":"","xFM":"","xFA":"","xCM":"","xCA":"","xPM":"","xPA":"","xQM":"","xQA":"","pObs":""}}}</script>
+<script>
+(function(){
+  var KEY='mcarreira_v1';
+  /* cópia limpa do aplicativo, capturada antes de qualquer alteração na tela (usada no backup completo) */
+  var APP_HTML=document.documentElement.outerHTML;
+  var restMsg='';
+  /* se este arquivo foi exportado como backup completo, ele traz os dados embutidos */
+  (function(){
+    var tag=document.getElementById('mc-backup');
+    if(!tag)return;
+    try{
+      var b=JSON.parse(tag.textContent),marca=localStorage.getItem('mcarreira_emb');
+      if(marca===b.criado)return;
+      var quando=new Date(b.criado).toLocaleString('pt-BR');
+      var tem=localStorage.getItem(KEY);
+      if(!tem||confirm('Este arquivo contém um backup de '+quando+'. Restaurar esses dados substitui os dados atuais deste navegador. Deseja restaurar?')){
+        localStorage.setItem(KEY,JSON.stringify(b.dados));
+        if(b.rascunho)localStorage.setItem('mcarreira_rascunho',JSON.stringify(b.rascunho));
+        restMsg='Dados restaurados do backup de '+quando+'.';
+      }
+      localStorage.setItem('mcarreira_emb',b.criado);
+    }catch(e){}
+  })();
+  var titulos={quadro:'Quadro de Avisos',partidas:'Partidas',estatisticas:'Estatísticas',elenco:'Central do Elenco',base:'Categorias de Base',mercado:'Mercado',backup:'Backup e Dados'};
+  var dados={partidas:[],avisos:[],base:[],mercado:[],planos:[],elenco:null,estat:{}};
+
+  try{
+    var salvo=localStorage.getItem(KEY);
+    if(salvo){var o=JSON.parse(salvo);for(var k in dados){if(Array.isArray(o[k]))dados[k]=o[k];}if(o.elenco&&o.elenco.jogadores)dados.elenco=o.elenco;if(o.estat&&typeof o.estat==='object')dados.estat=o.estat;}
+  }catch(e){}
+
+  function salvar(){try{localStorage.setItem(KEY,JSON.stringify(dados));}catch(e){}}
+
+  function atualizarHome(){
+    document.querySelectorAll('[data-count]').forEach(function(el){
+      var lista=dados[el.dataset.count]||[];
+      el.textContent=lista.length;
+    });
+    var box=document.getElementById('ultimos');
+    box.innerHTML='';
+    dados.partidas.slice(-3).reverse().forEach(function(p){
+      var d=document.createElement('div');d.className='rrow';
+      var a=document.createElement('span');a.textContent=p.adversario||'Partida';
+      var b=document.createElement('b');b.textContent=p.placar||'-';
+      d.appendChild(a);d.appendChild(b);box.appendChild(d);
+    });
+  }
+
+  function ir(tela){
+    var tem=tela==='inicio'||tela==='quadro'||tela==='elenco'||tela==='partidas'||tela==='estatisticas'||tela==='base'||tela==='mercado'||tela==='backup';
+    ['inicio','quadro','elenco','partidas','estatisticas','base','mercado','backup'].forEach(function(v){document.getElementById('v-'+v).classList.toggle('on',tela===v);});
+    document.getElementById('v-outras').classList.toggle('on',!tem);
+    if(!tem)document.getElementById('outraTitulo').textContent=titulos[tela]||'';
+    document.querySelectorAll('#nav button').forEach(function(b){
+      b.classList.toggle('on',b.dataset.go===tela);
+    });
+    window.scrollTo(0,0);
+    try{history.replaceState(null,'','#'+tela);}catch(e){}
+  }
+
+  document.addEventListener('click',function(e){
+    var alvo=e.target.closest('[data-go]');
+    if(alvo)ir(alvo.dataset.go);
+  });
+
+  /* ---- Quadro de avisos ---- */
+  var qTitulo=document.getElementById('qTitulo');
+  var qCat=document.getElementById('qCategoria');
+  var qTexto=document.getElementById('qTexto');
+  var qLista=document.getElementById('qLista');
+
+  function renderQuadro(){
+    var n=dados.avisos.length;
+    document.getElementById('qCount').textContent=n+(n===1?' aviso':' avisos');
+    qLista.innerHTML='';
+    if(!n){
+      var v=document.createElement('div');v.className='vazio';
+      v.textContent='Nenhum aviso ainda. Escreva sua primeira ideia ou lembrete no formulário acima.';
+      qLista.appendChild(v);return;
+    }
+    dados.avisos.slice().reverse().forEach(function(a){
+      var box=document.createElement('div');box.className='note';
+      var tag=document.createElement('span');tag.className='tag';tag.textContent=a.categoria;
+      var h3=document.createElement('h3');h3.textContent=a.titulo;
+      box.appendChild(tag);box.appendChild(h3);
+      if(a.texto){var p=document.createElement('p');p.textContent=a.texto;box.appendChild(p);}
+      var meta=document.createElement('div');meta.className='meta';
+      var dt=document.createElement('span');dt.textContent=new Date(a.criado).toLocaleDateString('pt-BR');
+      var del=document.createElement('button');del.type='button';del.className='del';del.textContent='Excluir';
+      del.addEventListener('click',function(){
+        if(!confirm('Excluir este aviso?'))return;
+        dados.avisos=dados.avisos.filter(function(x){return x.id!==a.id;});
+        salvar();renderQuadro();atualizarHome();
+      });
+      meta.appendChild(dt);meta.appendChild(del);box.appendChild(meta);
+      qLista.appendChild(box);
+    });
+  }
+
+  document.getElementById('qAdd').addEventListener('click',function(){
+    var titulo=qTitulo.value.trim();
+    if(!titulo){qTitulo.focus();return;}
+    dados.avisos.push({id:Date.now(),titulo:titulo,categoria:qCat.value,texto:qTexto.value.trim(),criado:Date.now()});
+    salvar();
+    qTitulo.value='';qTexto.value='';qCat.selectedIndex=0;
+    renderQuadro();atualizarHome();
+  });
+
+  /* ---- Central do Elenco ---- */
+  var FORM={
+    '4-3-3 (2)':[['GOL',50,88],['LE',14,68],['ZAG esquerda',38,72],['ZAG direita',62,72],['LD',86,68],['ME esquerda',20,46],['VOL central',50,50],['ME direita',80,46],['ATA esquerda',18,18],['ATA central',50,14],['ATA direita',82,18]],
+    '4-4-2':[['GOL',50,88],['LE',14,68],['ZAG esquerda',38,72],['ZAG direita',62,72],['LD',86,68],['ME',14,44],['MC esquerda',38,48],['MC direita',62,48],['MD',86,44],['ATA esquerda',38,16],['ATA direita',62,16]],
+    '4-2-3-1':[['GOL',50,88],['LE',14,68],['ZAG esquerda',38,72],['ZAG direita',62,72],['LD',86,68],['VOL esquerda',38,54],['VOL direita',62,54],['MEI esquerda',18,32],['MEI central',50,30],['MEI direita',82,32],['ATA',50,12]],
+    '3-5-2':[['GOL',50,88],['ZAG esquerda',24,72],['ZAG central',50,74],['ZAG direita',76,72],['ALE',10,46],['MC esquerda',33,52],['MC central',50,40],['MC direita',67,52],['ALD',90,46],['ATA esquerda',38,16],['ATA direita',62,16]]
+  };
+  var SVG='<svg viewBox="0 0 64 56"><path d="M20 2L8 8 1 24l10 5 3-7v32h36V22l3 7 10-5L56 8 44 2c-4 6-20 6-24 0z" fill="#f1c935" stroke="#a88a10" stroke-width="2" stroke-linejoin="round"/></svg>';
+  var LINHAS='<div class="ln" style="inset:3%"></div><div class="ln" style="left:3%;right:3%;top:50%;height:0"></div><div class="ln" style="width:22%;aspect-ratio:1;border-radius:50%;left:39%;top:39.6%"></div><div class="ln" style="left:30%;right:30%;bottom:3%;height:16%"></div>';
+  var CATS={G:['GOL','GK'],D:['ZAG','LE','LD','ADE','ADD','ALE','ALD'],M:['VOL','MC','ME','MD','MEI','MEIA'],A:['ATA','PE','PD','SA','CA']};
+  var CAMPOS=[['nome','Nome'],['pos','Posição','Ex.: PD, MEI, ZAG'],['idade','Idade','n'],['ger','GER FIFA 21','n'],['pot','Potencial','n'],['pe','Pé dominante','s'],['contrato','Contrato até','Ex.: 2022'],['valor','Valor de mercado','Ex.: €325 mil'],['salario','Salário semanal','Ex.: €3,1 mil'],['ritmo','Ritmo','n'],['fin','Finalização','n'],['passe','Passe','n'],['drible','Drible','n'],['def','Defesa','n'],['fis','Físico','n'],['gk','GER goleiro','n'],['div','Defesas (DIV)','n'],['han','Manuseio (HAN)','n'],['kic','Reposição (KIC)','n'],['ref','Reflexos (REF)','n'],['spd','Velocidade (SPD)','n'],['posi','Posicionamento (POS)','n'],['nac','Nacionalidade','Ex.: Inglaterra'],['status','Status','Ex.: Elenco principal']];
+
+  function semente(){
+    var S=[['Aidan Stone','GOL',58],['Malvind Benning','LE',65],['Ryan Sweeney','ZAG',63],['James Perch','ZAG',63],["Corey O'Keeffe",'LD',63],['Harry Charsley','ME',62],['George Lapslie','VOL'],['George Maris','ME',63],['Hamilton','ATA'],['Jordan Bowery','ATA'],['Danny Rose','ATA',63]];
+    var B=[['Campbell'],['Farrend Rawson','ZAG'],['Mair'],['Kevin Hartmann','ME / MC'],['Breno Borges','MC / MD'],['Jason Law','ME',57],['Jamie Reid','ATA']];
+    var F=[['Wright'],['Keaton Ward','MC / MEI'],['Pardington'],['Oliver Sarkic','PD / MD']];
+    var js=[],n=0;
+    function add(a){n++;js.push({id:n,nome:a[0],pos:a[1]||'',ger:a[2]||''});return n;}
+    var slots=S.map(add),banco=B.map(add);F.forEach(add);
+    return {jogadores:js,formacao:'4-3-3 (2)',slots:slots,banco:banco,prox:n+1};
+  }
+
+  var E=dados.elenco,sel=null,editId=null,busca='',catSel='';
+  if(!E||!E.jogadores){E=dados.elenco=semente();salvar();}
+  function $(i){return document.getElementById(i);}
+  function J(id){for(var i=0;i<E.jogadores.length;i++)if(E.jogadores[i].id===id)return E.jogadores[i];return null;}
+  function fora(){var u={};E.slots.concat(E.banco).forEach(function(i){u[i]=1;});return E.jogadores.filter(function(j){return !u[j.id];});}
+  function get(l){return l.t==='s'?E.slots[l.i]:l.t==='b'?E.banco[l.i]:l.id;}
+  function put(l,id){if(l.t==='s')E.slots[l.i]=id;else if(l.t==='b')E.banco[l.i]=id;}
+  function onde(id){var i=E.slots.indexOf(id);if(i>-1)return{t:'s',i:i};i=E.banco.indexOf(id);if(i>-1)return{t:'b',i:i};return{t:'f',id:id};}
+  function trocar(a,b){var x=get(a),y=get(b);put(a,y);put(b,x);E.banco=E.banco.filter(Boolean);}
+  function same(a,b){return a.t===b.t&&a.i===b.i&&a.id===b.id;}
+  function catOk(j,c){
+    if(!c)return true;
+    var t=(j.pos||'').toUpperCase().split(/[^A-ZÇÃ]+/).filter(Boolean);
+    return t.some(function(x){return CATS[c].indexOf(x)>-1;});
+  }
+  function passa(j){return (!busca||j.nome.toLowerCase().indexOf(busca)>-1)&&catOk(j,catSel);}
+
+  function tocar(l){
+    if(!sel)sel=l;
+    else if(same(sel,l))sel=null;
+    else{if(!(sel.t==='f'&&l.t==='f')){trocar(sel,l);salvar();}sel=null;}
+    if(sel){
+      var id=get(sel);
+      if(sel.t==='s')$('eVaga').value=sel.i;
+      if(id)$('eJog').value=id;
+    }
+    renderElenco();
+  }
+
+  function camisa(id,sub,loc,cls){
+    var j=id?J(id):null;
+    var b=document.createElement('button');b.type='button';
+    b.className=cls+(sel&&same(sel,loc)?' sel':'');
+    var s=document.createElement('span');s.className='sh';s.innerHTML=SVG;
+    var n=document.createElement('i');n.textContent=j&&j.ger?j.ger:'';s.appendChild(n);
+    var nm=document.createElement('b');nm.textContent=j?j.nome:'Vaga livre';
+    var sb=document.createElement('small');sb.textContent=sub;
+    b.appendChild(s);b.appendChild(nm);b.appendChild(sb);
+    b.addEventListener('click',function(){tocar(loc);});
+    return b;
+  }
+
+  function listar(box,itens,vazio){
+    box.innerHTML='';
+    var n=0;
+    itens.forEach(function(it){
+      var j=J(it.id);if(!j||!passa(j))return;
+      box.appendChild(camisa(it.id,j.pos||vazio,it.loc,'bp'));n++;
+    });
+    if(!n){var p=document.createElement('p');p.className='fonte';p.style.gridColumn='1/-1';p.textContent='Nenhum jogador aqui.';box.appendChild(p);}
+  }
+
+  function tabela(box,cols){
+    box.innerHTML='';
+    var w=document.createElement('div');w.style.overflowX='auto';
+    var t=document.createElement('table');t.className='tb';
+    var h=t.createTHead().insertRow();
+    cols.forEach(function(c){var th=document.createElement('th');th.textContent=c[1];h.appendChild(th);});
+    var tb=t.createTBody();
+    E.jogadores.slice().sort(function(a,b){return (+b.ger||0)-(+a.ger||0);}).forEach(function(j){
+      var r=tb.insertRow();
+      r.addEventListener('click',function(){abrirForm(j.id);});
+      cols.forEach(function(c){r.insertCell().textContent=j[c[0]]||'—';});
+    });
+    w.appendChild(t);box.appendChild(w);
+  }
+
+  function renderElenco(){
+    var n=E.jogadores.length;
+    $('eCount').textContent=n+(n===1?' jogador':' jogadores');
+    var fs=$('eForm');
+    if(!fs.options.length)Object.keys(FORM).forEach(function(k){var o=document.createElement('option');o.textContent=k;fs.appendChild(o);});
+    fs.value=E.formacao;
+    var sl=FORM[E.formacao]||FORM['4-3-3 (2)'];
+
+    var c=$('eCampo');c.innerHTML=LINHAS;
+    sl.forEach(function(s,i){
+      var b=camisa(E.slots[i],s[0],{t:'s',i:i},'pt');
+      b.style.left=s[1]+'%';b.style.top=s[2]+'%';c.appendChild(b);
+    });
+
+    var v1=$('eVaga').value,v2=$('eJog').value;
+    var sv=$('eVaga'),sj=$('eJog');sv.innerHTML='';sj.innerHTML='';
+    sl.forEach(function(s,i){
+      var o=document.createElement('option');o.value=i;
+      var id=E.slots[i];o.textContent=s[0]+' · '+(id?J(id).nome:'vaga livre');sv.appendChild(o);
+    });
+    E.jogadores.slice().sort(function(a,b){return a.nome.localeCompare(b.nome);}).forEach(function(j){
+      var o=document.createElement('option');o.value=j.id;o.textContent=j.nome;sj.appendChild(o);
+    });
+    if(v1!=='')sv.value=v1;
+    if(v2!=='')sj.value=v2;
+
+    listar($('eBanco'),E.banco.map(function(id,i){return{id:id,loc:{t:'b',i:i}};}),'Reserva');
+    listar($('eFora'),fora().map(function(j){return{id:j.id,loc:{t:'f',id:j.id}};}),'Não relacionado');
+
+    var bar=$('eSelBar');bar.innerHTML='';
+    var sid=sel?get(sel):null,sj2=sid?J(sid):null;
+    if(sj2){
+      var tx=document.createElement('span');tx.textContent='Selecionado: '+sj2.nome;bar.appendChild(tx);
+      var be=document.createElement('button');be.type='button';be.textContent='Editar';
+      be.addEventListener('click',function(){abrirForm(sj2.id);});
+      var bx=document.createElement('button');bx.type='button';bx.textContent='Remover';
+      bx.addEventListener('click',function(){excluir(sj2.id);});
+      bar.appendChild(be);bar.appendChild(bx);
+    }
+
+    tabelas();
+  }
+
+  /* formulário de jogador */
+  CAMPOS.forEach(function(c){
+    var w=document.createElement('div');
+    var l=document.createElement('label');l.textContent=c[1];l.htmlFor='f_'+c[0];
+    var f;
+    if(c[2]==='s'){
+      f=document.createElement('select');
+      ['Não confirma','Direito','Esquerdo','Ambos'].forEach(function(t){var o=document.createElement('option');o.textContent=t;f.appendChild(o);});
+    }else{
+      f=document.createElement('input');
+      if(c[2]==='n'){f.type='number';f.inputMode='numeric';}else{f.type='text';f.placeholder=c[2]||'';}
+    }
+    f.id='f_'+c[0];f.className='fld';
+    w.appendChild(l);w.appendChild(f);$('jCampos').appendChild(w);
+  });
+
+  function abrirForm(id){
+    editId=id||null;
+    var j=id?J(id):null;
+    CAMPOS.forEach(function(c){$('f_'+c[0]).value=(j&&j[c[0]])||(c[2]==='s'?'Não confirma':'');});
+    $('f_obs').value=(j&&j.obs)||'';
+    $('jExcluir').hidden=!j;
+    $('jForm').hidden=false;
+    $('jForm').scrollIntoView({behavior:'smooth'});
+  }
+
+  function excluir(id){
+    if(!confirm('Remover este jogador do elenco?'))return;
+    E.jogadores=E.jogadores.filter(function(j){return j.id!==id;});
+    E.slots=E.slots.map(function(x){return x===id?null:x;});
+    E.banco=E.banco.filter(function(x){return x!==id;});
+    sel=null;editId=null;salvar();$('jForm').hidden=true;renderElenco();
+  }
+
+  $('jSalvar').addEventListener('click',function(){
+    var nome=$('f_nome').value.trim();
+    if(!nome){$('f_nome').focus();return;}
+    var j=editId?J(editId):null;
+    if(!j){j={id:E.prox++};E.jogadores.push(j);}
+    CAMPOS.forEach(function(c){j[c[0]]=$('f_'+c[0]).value.trim();});
+    j.obs=$('f_obs').value.trim();
+    salvar();$('jForm').hidden=true;editId=null;sel=null;
+    renderElenco();window.scrollTo(0,0);
+  });
+  $('jCancelar').addEventListener('click',function(){$('jForm').hidden=true;editId=null;});
+  $('jExcluir').addEventListener('click',function(){if(editId)excluir(editId);});
+  $('eAdd').addEventListener('click',function(){abrirForm();});
+
+  $('eForm').addEventListener('change',function(){E.formacao=this.value;salvar();renderElenco();});
+  $('eAtrib').addEventListener('click',function(){
+    var i=+$('eVaga').value,id=+$('eJog').value;
+    if(!id)return;
+    var b=onde(id);
+    if(b.t==='s'&&b.i===i)return;
+    trocar({t:'s',i:i},b);sel=null;salvar();renderElenco();
+  });
+  $('eRest').addEventListener('click',function(){
+    if(!confirm('Restaurar a escalação inicial?'))return;
+    var b=semente();
+    E.formacao=b.formacao;
+    E.slots=b.slots.map(function(x){return J(x)?x:null;});
+    E.banco=b.banco.filter(function(x){return J(x);});
+    sel=null;salvar();renderElenco();
+  });
+  $('eBusca').addEventListener('input',function(){busca=this.value.trim().toLowerCase();renderElenco();});
+  $('eCat').addEventListener('change',function(){catSel=this.value;renderElenco();});
+  $('eTabs').addEventListener('click',function(e){
+    var t=e.target.closest('[data-tab]');if(!t)return;
+    document.querySelectorAll('#eTabs .tab').forEach(function(b){b.classList.toggle('on',b===t);});
+    ['tatico','status','fin'].forEach(function(k){$('tab-'+k).hidden=(k!==t.dataset.tab);});
+  });
+
+  /* ---- Criar formação: arrastar camisas, mudar função, salvar com nome ---- */
+  var BASE=Object.keys(FORM);
+  if(!E.custom)E.custom={};
+  Object.keys(E.custom).forEach(function(k){FORM[k]=E.custom[k];});
+
+  var ROLES=['GOL','ZAG','LE','LD','ALE','ALD','VOL','MC','MEI','ME','MD','PE','PD','SA','ATA'];
+  var ed=false,edSel=0,curF=null,bakF=null;
+
+  var caixa=document.createElement('div');
+  caixa.innerHTML=
+    '<button class="btn2" id="eNew" type="button">+ Criar formação</button>'+
+    '<button class="btn2 del" id="eDelF" type="button" hidden>Excluir esta formação</button>'+
+    '<div id="eEd" hidden>'+
+      '<p class="intro">Arraste as camisas no campo para mover cada jogador. Toque em uma camisa para mudar a função dela.</p>'+
+      '<label for="eFunc">Função da posição selecionada</label>'+
+      '<select class="fld" id="eFunc"></select>'+
+      '<label for="eNome">Nome da formação</label>'+
+      '<input class="fld" id="eNome" type="text" maxlength="30" placeholder="Ex.: 4-1-4-1 ofensivo" autocomplete="off">'+
+      '<button class="btn2 main" id="eSalvF" type="button">Salvar formação</button>'+
+      '<button class="btn2" id="eCancF" type="button">Cancelar edição</button>'+
+    '</div>';
+  $('eForm').insertAdjacentElement('afterend',caixa);
+
+  function campoBtns(){return $('eCampo').querySelectorAll('.pt');}
+
+  function refFunc(){
+    var rol=FORM[E.formacao][edSel][0],lista=ROLES.slice(),f=$('eFunc');
+    if(lista.indexOf(rol)<0)lista.unshift(rol);
+    f.innerHTML='';
+    lista.forEach(function(t){var o=document.createElement('option');o.textContent=t;f.appendChild(o);});
+    f.value=rol;
+  }
+
+  function selEd(i){
+    edSel=i;
+    campoBtns().forEach(function(b,k){b.classList.toggle('sel',k===i);});
+    refFunc();
+  }
+
+  function posRender(){
+    $('eForm').disabled=ed;
+    $('eNew').hidden=ed;
+    $('eDelF').hidden=ed||!E.custom[E.formacao];
+    $('eEd').hidden=!ed;
+    $('eCampo').classList.toggle('ed',ed);
+    if(!ed)return;
+    var sl=FORM[E.formacao];
+    campoBtns().forEach(function(b,i){
+      b.addEventListener('pointerdown',function(e){
+        var r=$('eCampo').getBoundingClientRect();
+        b.setPointerCapture(e.pointerId);
+        selEd(i);
+        function mv(ev){
+          var x=Math.max(8,Math.min(92,(ev.clientX-r.left)/r.width*100));
+          var y=Math.max(7,Math.min(93,(ev.clientY-r.top)/r.height*100));
+          sl[i][1]=Math.round(x);sl[i][2]=Math.round(y);
+          b.style.left=x+'%';b.style.top=y+'%';
+        }
+        function up(){
+          b.removeEventListener('pointermove',mv);
+          b.removeEventListener('pointerup',up);
+          b.removeEventListener('pointercancel',up);
+        }
+        b.addEventListener('pointermove',mv);
+        b.addEventListener('pointerup',up);
+        b.addEventListener('pointercancel',up);
+      });
+    });
+    selEd(Math.min(edSel,sl.length-1));
+  }
+
+  /* em modo edição, tocar na camisa seleciona a posição (não troca jogadores) */
+  $('eCampo').addEventListener('click',function(e){
+    if(!ed)return;
+    e.stopPropagation();
+    var b=e.target.closest('.pt');
+    if(b)selEd([].indexOf.call(campoBtns(),b));
+  },true);
+
+  var _re=renderElenco;
+  renderElenco=function(){_re();posRender();};
+
+  $('eNew').addEventListener('click',function(){
+    curF=E.formacao;bakF=FORM[curF];
+    FORM[curF]=bakF.map(function(s){return s.slice();});
+    ed=true;edSel=0;sel=null;
+    $('eNome').value=E.custom[curF]?curF:'';
+    renderElenco();
+  });
+
+  $('eFunc').addEventListener('change',function(){
+    FORM[E.formacao][edSel][0]=this.value;
+    renderElenco();
+  });
+
+  $('eCancF').addEventListener('click',function(){
+    FORM[curF]=bakF;ed=false;E.formacao=curF;renderElenco();
+  });
+
+  $('eSalvF').addEventListener('click',function(){
+    var nome=$('eNome').value.trim();
+    if(!nome){$('eNome').focus();return;}
+    if(BASE.indexOf(nome)>-1){alert('Já existe uma formação padrão com esse nome. Escolha outro nome.');return;}
+    if(E.custom[nome]&&nome!==curF&&!confirm('Já existe uma formação salva com esse nome. Substituir?'))return;
+    var copia=FORM[curF];
+    FORM[curF]=bakF;
+    FORM[nome]=copia;E.custom[nome]=copia;
+    var fs=$('eForm'),tem=false;
+    [].forEach.call(fs.options,function(o){if(o.textContent===nome)tem=true;});
+    if(!tem){var o=document.createElement('option');o.textContent=nome;fs.appendChild(o);}
+    E.formacao=nome;ed=false;salvar();renderElenco();
+  });
+
+  $('eDelF').addEventListener('click',function(){
+    var nome=E.formacao;
+    if(!E.custom[nome]||!confirm('Excluir a formação "'+nome+'"?'))return;
+    delete E.custom[nome];delete FORM[nome];
+    [].forEach.call($('eForm').options,function(o){if(o.textContent===nome)o.remove();});
+    E.formacao='4-3-3 (2)';salvar();renderElenco();
+  });
+
+  /* ---- Elenco completo + abas Status e Finanças ---- */
+  var DADOS=[
+    "Marek Štěch|República Tcheca|GOL|30|63|63||2022|€325 mil|€3,1 mil",
+    "Corey O'Keeffe|Irlanda|ALA D / ALA E|22|63|71||2022|€1,0 mi|€3,3 mil",
+    "Rollin Menayese|País de Gales|ZAG|22|63|69||2022|€700 mil|€3,3 mil",
+    "Farrend Rawson|Inglaterra|ZAG|23|63|68||2022|€650 mil|€3,3 mil",
+    "Ryan Sweeney|Irlanda|ZAG|23|63|69||2021|€700 mil|€3,3 mil",
+    "Malvind Benning|Inglaterra|LE / ALA E|26|65|67||2021|€800 mil|€4,8 mil",
+    "George Maris|Inglaterra|MC / ME|24|63|69||2022|€750 mil|€3,7 mil",
+    "Ollie Clarke|Inglaterra|MC|28|65|65||2022|€725 mil|€5,4 mil",
+    "Harry Charsley|Irlanda|MC / MEI|23|62|70||2021|€875 mil|€3,2 mil",
+    "Jordan Bowery|Inglaterra|ATA|29|63|63||2022|€475 mil|€4,8 mil",
+    "Andy Cook|Inglaterra|ATA|29|65|65||2021|€725 mil|€5,9 mil",
+    "Alistair Smith|Inglaterra|MC|21|56|63||2021|€300 mil|€2,4 mil",
+    "Kellan Gordon|Inglaterra|ALA D / ME D / LD|22|61|67||2021|€500 mil|€2,7 mil",
+    "Jamie Reid|Irlanda do Norte|ATA|25|61|64||2022|€450 mil|€3,6 mil",
+    "Nicky Maynard|Inglaterra|ATA|33|65|65||2021|€450 mil|€5,7 mil",
+    "Tyrese Sinclair|Inglaterra|ME / MEI / MD|19|58|71||2021|€475 mil|€1,8 mil",
+    "James Clarke|Irlanda|LD / ZAG|20|60|70||2021|€525 mil|€2,1 mil",
+    "Stephen McLaughlin|Irlanda|MD / ME / ALA E|30|64|64||2021|€575 mil|€4,7 mil",
+    "Jason Law|Inglaterra|ALA E / ME / ATA|21|57|67||2021|€350 mil|€2,1 mil",
+    "Aidan Stone|Inglaterra|GOL|21|58|68||2021|€400 mil|€1,5 mil",
+    "George Lapslie|Inglaterra|MC / MEI|22|59|68||2021|€500 mil|€2,8 mil",
+    "Joe Riley|Inglaterra|ALA D / LD|28|64|64||2021|€525 mil|€4,5 mil",
+    "James Perch|Inglaterra|VOL / LD / MC|34|63|63||2021|€160 mil|€3,9 mil",
+    "Aaron O'Driscoll|Irlanda|ZAG / VOL|21|58|70||2022|€475 mil|€2,1 mil",
+    "Aiden Walker|Inglaterra|ZAG / LD|20|54|64||2021|€220 mil|€1,9 mil",
+    "Danny Rose|Mansfield Town|ATA|26|63|64||2022|€575 mil|€2,9 mil",
+    "Jake Wright|Mansfield Town|ZAG|34|63|63||2021|€160 mil|€3,9 mil",
+    "Willem Tomlinson|Mansfield Town|MC|22|60|67||2021|€500 mil|€2,8 mil",
+    "Keaton Ward|Mansfield Town|MC / MEI|20|54|68||2022|€250 mil|€1,6 mil",
+    "Josh Scott|Mansfield Town|ATA|18|54|69||2022|€250 mil|€1,5 mil",
+    "Jimmy Knowles|Mansfield Town|ATA|18|57|70||2021|€375 mil|€1,5 mil",
+    "Jaden Charles|Mansfield Town|LE|18|51|61||2022|€120 mil|€800",
+    "James Pardington|Mansfield Town|GOL|19|52|67||2021|€170 mil|€900",
+    "Maison Campbell|Mansfield Town|GOL|16|53|67||2021|€190 mil|€500",
+    "Oliver Šarkić|Montenegro|PD / MD|22|62|70|Direito|2022|€900 mil|€2,1 mil",
+    "Stephen Quinn|Irlanda|MC / VOL|34|64|64|Esquerdo|2021|€275 mil|€4,7 mil|Emprestado"
+  ];
+  function norm(s){return String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();}
+
+  /* migração única: completa os jogadores já existentes e adiciona os que faltam */
+  (function(){
+    if(E.v>=2)return;
+    var ord=[],ch=['nome','nac','pos','idade','ger','pot','pe','contrato','valor','salario','status'];
+    DADOS.forEach(function(l){
+      var a=l.split('|'),nm=norm(a[0]),j=null;
+      var livres=E.jogadores.filter(function(x){return ord.indexOf(x)<0;});
+      livres.forEach(function(x){if(!j&&norm(x.nome)===nm)j=x;});
+      if(!j){var ult=nm.split(' ').pop(),c=livres.filter(function(x){return norm(x.nome)===ult;});if(c.length===1)j=c[0];}
+      if(!j){j={id:E.prox++};E.jogadores.push(j);}
+      ch.forEach(function(f,i){
+        var v=a[i];
+        if(f==='status')v=v||'Elenco principal';
+        if(v)j[f]=v;else if(j[f]==null)j[f]='';
+      });
+      ord.push(j);
+    });
+    E.jogadores=ord.concat(E.jogadores.filter(function(x){return ord.indexOf(x)<0;}));
+    E.v=2;salvar();
+  })();
+
+  function dup(a,b){
+    var d=document.createElement('div'),n=document.createElement('b'),s=document.createElement('small');
+    n.textContent=a;s.textContent=b||'';d.appendChild(n);d.appendChild(s);return d;
+  }
+  function abrev(p){return {Direito:'D',Esquerdo:'E',Ambos:'A'}[p]||'–';}
+  function tab2(box,cols){
+    box.innerHTML='';
+    var w=document.createElement('div');w.style.overflowX='auto';
+    var t=document.createElement('table');t.className='tb';
+    var hr=t.createTHead().insertRow();
+    cols.concat([['Ações']]).forEach(function(c){var th=document.createElement('th');th.textContent=c[0];hr.appendChild(th);});
+    var tb=t.createTBody();
+    E.jogadores.filter(passa).forEach(function(j){
+      var r=tb.insertRow();
+      cols.forEach(function(c){
+        var td=r.insertCell(),v=c[1](j);
+        if(c[2])td.className=c[2];
+        if(v&&v.nodeType)td.appendChild(v);else td.textContent=(v===''||v==null)?'–':v;
+      });
+      var td=r.insertCell();
+      [['Editar','',function(){abrirForm(j.id);}],['Excluir','del',function(){excluir(j.id);}]].forEach(function(x){
+        var b=document.createElement('button');b.type='button';b.className='ab '+x[1];b.textContent=x[0];
+        b.addEventListener('click',x[2]);td.appendChild(b);
+      });
+    });
+    w.appendChild(t);box.appendChild(w);
+  }
+  function tabelas(){
+    tab2($('eStatus'),[
+      ['Jogador',function(j){return dup(j.nome,j.nac);}],
+      ['Posição',function(j){return j.pos;}],
+      ['Idade',function(j){return j.idade;}],
+      ['GER',function(j){return j.ger;},'gv'],
+      ['POT',function(j){return j.pot;}],
+      ['Pé',function(j){return abrev(j.pe);}],
+      ['Status',function(j){return j.status;}]
+    ]);
+    tab2($('eFin'),[
+      ['Jogador',function(j){return dup(j.nome,j.pos);}],
+      ['Contrato até',function(j){return j.contrato;}],
+      ['Valor',function(j){return j.valor;}],
+      ['Salário/semana',function(j){return j.salario;}]
+    ]);
+  }
+
+  /* barra de busca, filtro e botão no topo de cada tabela */
+  var CATHTML=$('eCat').innerHTML,FONTE=document.querySelector('#tab-tatico .fonte').outerHTML;
+  [['status','eStatus'],['fin','eFin']].forEach(function(p){
+    $('tab-'+p[0]).innerHTML=
+      '<div class="tbar"><input class="fld bq" type="search" placeholder="Buscar jogador..." autocomplete="off">'+
+      '<select class="fld bc">'+CATHTML+'</select>'+
+      '<button class="btn2 main ba" type="button">+ Adicionar jogador</button></div>'+
+      '<div id="'+p[1]+'"></div>'+FONTE;
+  });
+  function sincBusca(src){document.querySelectorAll('.bq,#eBusca').forEach(function(i){if(i!==src)i.value=src.value;});}
+  function sincCat(src){document.querySelectorAll('.bc,#eCat').forEach(function(i){if(i!==src)i.value=src.value;});}
+  document.querySelectorAll('.bq').forEach(function(i){
+    i.addEventListener('input',function(){busca=this.value.trim().toLowerCase();sincBusca(this);renderElenco();});
+  });
+  document.querySelectorAll('.bc').forEach(function(i){
+    i.addEventListener('change',function(){catSel=this.value;sincCat(this);renderElenco();});
+  });
+  document.querySelectorAll('.ba').forEach(function(i){i.addEventListener('click',function(){abrirForm();});});
+  $('eBusca').addEventListener('input',function(){sincBusca(this);});
+  $('eCat').addEventListener('change',function(){sincCat(this);});
+
+  /* ---- Partidas ---- */
+  var TIMES=['Barrow','Bolton Wanderers','Bradford City','Cambridge United','Carlisle United','Cheltenham Town','Colchester United','Crawley Town','Exeter City','Forest Green Rovers','Grimsby Town','Harrogate Town','Leyton Orient','Morecambe','Newport County','Oldham Athletic','Port Vale','Salford City','Scunthorpe United','Southend United','Stevenage','Tranmere Rovers','Walsall'];
+  var RK='mcarreira_rascunho',pEv=[],pNotas={},pEditId=null;
+  var CP=['pTemp','pComp','pAdv','pMando','pRod','pData','pGM','pGA','xFM','xFA','xCM','xCA','xPM','xPA','xQM','xQA','pObs'];
+  var GR={gol:'fGol',sub:'fSub',les:'fLes'};
+
+  function nome(id){var j=J(id);return j?j.nome:'—';}
+  function msg(t){$('pMsg').textContent=t||'';}
+  function setV(id,v){
+    var s=$(id),ok=[].some.call(s.options,function(o){return o.value===String(v);});
+    if(ok)s.value=v;
+  }
+
+  /* rascunho automático */
+  function rasc(){
+    var o={ev:pEv,notas:pNotas,edit:pEditId,c:{}};
+    CP.forEach(function(k){o.c[k]=$(k).value;});
+    try{localStorage.setItem(RK,JSON.stringify(o));}catch(e){}
+  }
+  function aplicar(o){
+    var c=o.c||{};
+    CP.forEach(function(k){$(k).value=c[k]!=null?c[k]:'';});
+    if(!$('pMando').value)$('pMando').value='Fora';
+    pEv=o.ev||[];pNotas=o.notas||{};pEditId=o.edit||null;
+  }
+  function limparForm(manter){
+    var t=$('pTemp').value,c=$('pComp').value;
+    aplicar({});
+    if(manter){$('pTemp').value=t;$('pComp').value=c;}
+    fecharEv();renderEv();notasLista();rasc();
+  }
+
+  /* menus de jogadores para os eventos */
+  function grupo(sel,rotulo,ids){
+    if(!ids.length)return;
+    var g=document.createElement('optgroup');g.label=rotulo;
+    ids.forEach(function(id){
+      if(!J(id))return;
+      var o=document.createElement('option');o.value=id;o.textContent=nome(id);g.appendChild(o);
+    });
+    sel.appendChild(g);
+  }
+  function preencherEv(){
+    var tit=E.slots.filter(Boolean),ban=E.banco.filter(Boolean),u={};
+    tit.concat(ban).forEach(function(i){u[i]=1;});
+    var res=E.jogadores.filter(function(j){return !u[j.id];}).map(function(j){return j.id;});
+    var ids=['gJog','gAss','sSai','sEnt','lJog'],v={};
+    ids.forEach(function(i){v[i]=$(i).value;$(i).innerHTML='';});
+    var o=document.createElement('option');o.value='0';o.textContent='Gol contra';$('gJog').appendChild(o);
+    o=document.createElement('option');o.value='-1';o.textContent='Gol do adversário';$('gJog').appendChild(o);
+    o=document.createElement('option');o.value='0';o.textContent='Sem assistência';$('gAss').appendChild(o);
+    ['gJog','gAss','sSai','lJog'].forEach(function(i){grupo($(i),'Titulares',tit);grupo($(i),'Reservas',ban);grupo($(i),'Elenco',res);});
+    grupo($('sEnt'),'Reservas',ban);grupo($('sEnt'),'Titulares',tit);grupo($('sEnt'),'Elenco',res);
+    ids.forEach(function(i){if(v[i])setV(i,v[i]);});
+  }
+  function abrirEv(t){
+    preencherEv();
+    Object.keys(GR).forEach(function(k){$(GR[k]).hidden=(k!==t);});
+    $(GR[t]).scrollIntoView({behavior:'smooth',block:'nearest'});
+  }
+  function fecharEv(){
+    Object.keys(GR).forEach(function(k){$(GR[k]).hidden=true;});
+    ['gMin','sMin','lMin','lObs'].forEach(function(i){$(i).value='';});
+  }
+
+  function addEv(t){
+    var mid={gol:'gMin',sub:'sMin',les:'lMin'}[t],min=parseInt($(mid).value,10),e;
+    if(isNaN(min)||min<0){$(mid).focus();return;}
+    if(t==='gol'){
+      var jg=+$('gJog').value,as=+$('gAss').value;
+      if(jg===-1)e={t:'gol',jog:-1,ass:0,min:min,txt:'⚽ Gol do adversário'};
+      else e={t:'gol',jog:jg,ass:as,min:min,txt:'⚽ Gol: '+(jg?nome(jg):'gol contra')+(as?' (assistência: '+nome(as)+')':'')};
+    }else if(t==='sub'){
+      var sa=+$('sSai').value,en=+$('sEnt').value;
+      if(!sa||!en||sa===en){msg('Escolha dois jogadores diferentes.');return;}
+      e={t:'sub',sai:sa,ent:en,min:min,txt:'⇄ Entrou '+nome(en)+', saiu '+nome(sa)};
+    }else{
+      var lj=+$('lJog').value,ob=$('lObs').value.trim();
+      if(!lj)return;
+      e={t:'les',jog:lj,min:min,txt:'＋ Lesão: '+nome(lj)+(ob?' — '+ob:'')};
+    }
+    pEv.push(e);msg('');
+    $(mid).value='';if(t==='les')$('lObs').value='';
+    renderEv();notasLista();rasc();
+  }
+
+  function renderEv(){
+    var n=pEv.length,box=$('evList');
+    $('evCount').textContent=n+(n===1?' evento':' eventos');
+    box.innerHTML='';
+    if(!n){
+      var p=document.createElement('p');p.className='fonte';p.textContent='Nenhum evento adicionado.';
+      box.appendChild(p);return;
+    }
+    pEv.map(function(e,i){return {e:e,i:i};}).sort(function(a,b){return a.e.min-b.e.min;}).forEach(function(x){
+      var d=document.createElement('div');d.className='ev';
+      var m=document.createElement('span');m.className='mn';m.textContent=x.e.min+"'";
+      var t=document.createElement('span');t.className='tx';t.textContent=x.e.txt;
+      var bt=document.createElement('button');bt.type='button';bt.textContent='Excluir';
+      bt.addEventListener('click',function(){pEv.splice(x.i,1);renderEv();notasLista();rasc();});
+      d.appendChild(m);d.appendChild(t);d.appendChild(bt);box.appendChild(d);
+    });
+  }
+
+  /* notas dos participantes */
+  function partic(){
+    var ids=E.slots.filter(Boolean);
+    pEv.forEach(function(e){if(e.t==='sub'&&e.ent&&ids.indexOf(e.ent)<0)ids.push(e.ent);});
+    return ids.filter(function(i){return J(i);});
+  }
+  function notasLista(){
+    var box=$('nList');box.innerHTML='';
+    partic().forEach(function(id){
+      var r=document.createElement('div');r.className='nr';
+      var s=document.createElement('span');s.textContent=nome(id);
+      var f=document.createElement('input');
+      f.className='fld';f.type='number';f.min=0;f.max=10;f.step='0.1';f.inputMode='decimal';f.placeholder='0–10';
+      f.value=pNotas[id]!=null?pNotas[id]:'';
+      f.addEventListener('input',function(){if(f.value==='')delete pNotas[id];else pNotas[id]=f.value;rasc();});
+      r.appendChild(s);r.appendChild(f);box.appendChild(r);
+    });
+  }
+
+  /* salvar partida */
+  function salvarPartida(){
+    var adv=$('pAdv').value.trim(),gm=$('pGM').value,ga=$('pGA').value;
+    if(!adv){msg('Informe o adversário.');$('pAdv').focus();return;}
+    if(gm===''||ga===''){msg('Informe os gols dos dois times.');return;}
+    var ant=pEditId?dados.partidas.filter(function(x){return x.id===pEditId;})[0]:null;
+    function par(a,b){return [$(a).value,$(b).value];}
+    var m={
+      id:pEditId||Date.now(),criado:ant?ant.criado:Date.now(),
+      temporada:$('pTemp').value.trim(),competicao:$('pComp').value.trim(),adversario:adv,mando:$('pMando').value,
+      rodada:$('pRod').value.trim(),data:$('pData').value,gm:+gm,ga:+ga,placar:gm+' – '+ga,
+      ev:pEv.map(function(e){return JSON.parse(JSON.stringify(e));}),
+      stats:{fin:par('xFM','xFA'),ch:par('xCM','xCA'),posse:par('xPM','xPA'),passes:par('xQM','xQA')},
+      notas:partic().filter(function(i){return pNotas[i]!=null&&pNotas[i]!=='';}).map(function(i){return {id:i,nome:nome(i),nota:pNotas[i]};}),
+      escal:{formacao:E.formacao,titulares:E.slots.filter(Boolean).map(nome)},
+      obs:$('pObs').value.trim()
+    };
+    if(ant)dados.partidas[dados.partidas.indexOf(ant)]=m;else dados.partidas.push(m);
+    salvar();
+    limparForm(true);
+    msg('Partida salva no histórico.');
+    renderHist();atualizarHome();
+  }
+
+  /* histórico */
+  function dataBR(s){
+    if(!s)return '';
+    var d=new Date(s+'T12:00:00');
+    return isNaN(d)?s:d.toLocaleDateString('pt-BR');
+  }
+  function linhaStat(rot,a,suf){
+    if(!a||(a[0]===''&&a[1]===''))return null;
+    return rot+': '+(a[0]===''?'–':a[0]+suf)+' x '+(a[1]===''?'–':a[1]+suf);
+  }
+  function editar(m){
+    var s=m.stats||{fin:['',''],ch:['',''],posse:['',''],passes:['','']};
+    aplicar({c:{pTemp:m.temporada,pComp:m.competicao,pAdv:m.adversario,pMando:m.mando,pRod:m.rodada,pData:m.data,pGM:m.gm,pGA:m.ga,
+      xFM:s.fin[0],xFA:s.fin[1],xCM:s.ch[0],xCA:s.ch[1],xPM:s.posse[0],xPA:s.posse[1],xQM:s.passes[0],xQA:s.passes[1],pObs:m.obs},
+      ev:JSON.parse(JSON.stringify(m.ev||[])),edit:m.id});
+    (m.notas||[]).forEach(function(n){pNotas[n.id]=n.nota;});
+    renderEv();notasLista();rasc();
+    msg('Editando uma partida salva. Toque em "Salvar partida" para atualizar.');
+    window.scrollTo(0,0);
+  }
+  function renderHist(){
+    var n=dados.partidas.length,box=$('hList');
+    $('hCount').textContent=n+(n===1?' partida':' partidas');
+    box.innerHTML='';
+    if(!n){
+      var p=document.createElement('p');p.className='fonte';p.style.marginTop='18px';
+      p.textContent='Nenhuma partida registrada ainda.';box.appendChild(p);return;
+    }
+    dados.partidas.slice().reverse().forEach(function(m){
+      var c=document.createElement('div');c.className='hi';
+      var t=document.createElement('div');t.className='t';
+      var s=document.createElement('span');s.textContent='Mansfield '+m.gm+' – '+m.ga+' '+m.adversario;
+      var res=m.gm>m.ga?'v':m.gm<m.ga?'d':'e';
+      var r=document.createElement('span');r.className='rs '+res;r.textContent={v:'V',e:'E',d:'D'}[res];
+      t.appendChild(s);t.appendChild(r);
+      var mm=document.createElement('div');mm.className='m';
+      mm.textContent=[m.mando,m.competicao,m.temporada,m.rodada,dataBR(m.data)].filter(Boolean).join(' · ');
+      var L=[];
+      if(m.ev&&m.ev.length){
+        L.push('EVENTOS');
+        m.ev.slice().sort(function(a,b){return a.min-b.min;}).forEach(function(e){L.push(e.min+"'  "+e.txt);});
+        L.push('');
+      }
+      var st=m.stats||{},ls=[linhaStat('Finalizações',st.fin,''),linhaStat('Chutes certos',st.ch,''),linhaStat('Posse',st.posse,'%'),linhaStat('Precisão de passes',st.passes,'%')].filter(Boolean);
+      if(ls.length){L.push('ESTATÍSTICAS (Mansfield x adversário)');ls.forEach(function(x){L.push(x);});L.push('');}
+      if(m.notas&&m.notas.length){L.push('NOTAS');m.notas.forEach(function(x){L.push(x.nome+': '+x.nota);});L.push('');}
+      if(m.escal&&m.escal.titulares&&m.escal.titulares.length){L.push('ESCALAÇÃO ('+m.escal.formacao+')');L.push(m.escal.titulares.join(', '));L.push('');}
+      if(m.obs){L.push('OBSERVAÇÕES');L.push(m.obs);}
+      var dt=document.createElement('div');dt.className='dt';dt.hidden=true;
+      dt.textContent=L.length?L.join('\n').trim():'Sem detalhes registrados.';
+      var ac=document.createElement('div');ac.className='ac';
+      [['Detalhes',function(){dt.hidden=!dt.hidden;}],['Editar',function(){editar(m);}],['Excluir',function(){
+        if(!confirm('Excluir esta partida do histórico?'))return;
+        dados.partidas=dados.partidas.filter(function(x){return x.id!==m.id;});
+        salvar();renderHist();atualizarHome();
+      }]].forEach(function(x,i){
+        var b=document.createElement('button');b.type='button';b.className='btn3';b.textContent=x[0];
+        if(i===2){b.style.borderColor='#6b2f3a';b.style.color='#ff9aa8';}
+        b.addEventListener('click',x[1]);ac.appendChild(b);
+      });
+      c.appendChild(t);c.appendChild(mm);c.appendChild(dt);c.appendChild(ac);box.appendChild(c);
+    });
+  }
+
+  /* ligações */
+  TIMES.forEach(function(n){var o=document.createElement('option');o.value=n;$('pTimes').appendChild(o);});
+  $('bGol').addEventListener('click',function(){abrirEv('gol');});
+  $('bSub').addEventListener('click',function(){abrirEv('sub');});
+  $('bLes').addEventListener('click',function(){abrirEv('les');});
+  $('bLimp').addEventListener('click',function(){
+    fecharEv();
+    ['gJog','gAss','sSai','sEnt','lJog'].forEach(function(i){$(i).selectedIndex=0;});
+  });
+  document.querySelectorAll('[data-fecha]').forEach(function(b){b.addEventListener('click',fecharEv);});
+  $('aGol').addEventListener('click',function(){addEv('gol');});
+  $('aSub').addEventListener('click',function(){addEv('sub');});
+  $('aLes').addEventListener('click',function(){addEv('les');});
+  $('nAtu').addEventListener('click',notasLista);
+  $('pSalvar').addEventListener('click',salvarPartida);
+  $('pNovo').addEventListener('click',function(){
+    if(!confirm('Limpar o formulário e começar uma nova partida?'))return;
+    limparForm(false);msg('Formulário limpo.');
+  });
+  $('hHead').addEventListener('click',function(){$('hBody').hidden=!$('hBody').hidden;});
+  $('pTabs').addEventListener('click',function(e){
+    var b=e.target.closest('[data-s]');if(!b)return;
+    document.querySelectorAll('#pTabs .pab').forEach(function(x){x.classList.toggle('on',x===b);});
+    $(b.dataset.s).scrollIntoView({behavior:'smooth',block:'start'});
+  });
+  $('v-partidas').addEventListener('input',rasc);
+  $('v-partidas').addEventListener('change',rasc);
+
+  var r0=null;
+  try{r0=JSON.parse(localStorage.getItem(RK)||'null');}catch(e){}
+  aplicar(r0||{});
+  preencherEv();renderEv();notasLista();renderHist();
+
+  /* ---- Estatísticas ---- */
+  var ST=dados.estat,tEdit=null;
+  var BOX={eq:'tEq',art:'tArt',jog:'tJog'};
+
+  function atualT(){
+    var l=dados.partidas.slice().reverse();
+    for(var i=0;i<l.length;i++)if(l[i].temporada)return l[i].temporada;
+    return '';
+  }
+  function tOf(m){return m.temporada||atualT();}
+  function f1(n){return (Math.round(n*10)/10).toString().replace('.',',');}
+  function avg(o,suf){return o.n?f1(o.m/o.n)+suf+' x '+f1(o.a/o.n)+suf:'–';}
+  function vazioT(t){var p=document.createElement('p');p.className='fonte';p.textContent=t;return p;}
+  function fk(){return $('tTemp').value+'|'+$('tComp').value;}
+  function G(k,auto){var o=ST[fk()];return (o&&o.v&&(k in o.v))?o.v[k]:auto;}
+  function temOv(sec){
+    var o=ST[fk()];
+    return !!o&&!!o.v&&Object.keys(o.v).some(function(k){return k.indexOf(sec+'.')===0;});
+  }
+
+  function filtros(){
+    var ts=[],cs=[],vt=$('tTemp').value,vc=$('tComp').value;
+    dados.partidas.forEach(function(m){
+      var t=tOf(m);if(t&&ts.indexOf(t)<0)ts.push(t);
+      if(m.competicao&&cs.indexOf(m.competicao)<0)cs.push(m.competicao);
+    });
+    ts.sort().reverse();
+    var st=$('tTemp'),sc=$('tComp');
+    st.innerHTML='';sc.innerHTML='';
+    ts.forEach(function(t){var o=document.createElement('option');o.textContent=t;st.appendChild(o);});
+    var o0=document.createElement('option');o0.value='';o0.textContent='Todas as competições';sc.appendChild(o0);
+    cs.forEach(function(c){var o=document.createElement('option');o.textContent=c;sc.appendChild(o);});
+    if(ts.length)st.value=(vt&&ts.indexOf(vt)>-1)?vt:(ts.indexOf(atualT())>-1?atualT():ts[0]);
+    sc.value=(vc&&cs.indexOf(vc)>-1)?vc:'';
+  }
+
+  function calc(){
+    var t=$('tTemp').value,c=$('tComp').value;
+    var L=dados.partidas.filter(function(m){return tOf(m)===t&&(!c||m.competicao===c);});
+    var A={n:L.length,eq:{j:0,v:0,e:0,d:0,gp:0,gc:0},casa:[0,0,0],fora:[0,0,0],cs:0,st:{},art:{},jog:{}};
+    ['fin','ch','posse','passes'].forEach(function(k){A.st[k]={m:0,a:0,n:0};});
+    var byName={};E.jogadores.forEach(function(j){byName[j.nome]=j.id;});
+    L.forEach(function(m){
+      var r=m.gm>m.ga?0:(m.gm===m.ga?1:2);
+      A.eq.j++;A.eq.gp+=m.gm;A.eq.gc+=m.ga;A.eq[['v','e','d'][r]]++;
+      (m.mando==='Casa'?A.casa:A.fora)[r]++;
+      if(m.ga===0)A.cs++;
+      var s=m.stats||{};
+      ['fin','ch','posse','passes'].forEach(function(k){
+        var a=s[k];
+        if(a&&a[0]!==''&&a[1]!==''){A.st[k].m+=+a[0];A.st[k].a+=+a[1];A.st[k].n++;}
+      });
+      var ids={};
+      (m.notas||[]).forEach(function(x){ids[x.id]=1;});
+      ((m.escal&&m.escal.titulares)||[]).forEach(function(nm){if(byName[nm])ids[byName[nm]]=1;});
+      (m.ev||[]).forEach(function(e){
+        if(e.t==='gol'){
+          if(e.jog>0){ids[e.jog]=1;var a=A.art[e.jog]=A.art[e.jog]||{g:0,a:0};a.g++;}
+          if(e.ass>0){ids[e.ass]=1;var b=A.art[e.ass]=A.art[e.ass]||{g:0,a:0};b.a++;}
+        }else if(e.t==='sub'){ids[e.sai]=1;ids[e.ent]=1;}
+        else if(e.t==='les'){ids[e.jog]=1;}
+      });
+      Object.keys(ids).forEach(function(id){var p=A.jog[id]=A.jog[id]||{j:0,s:0,c:0};p.j++;});
+      (m.notas||[]).forEach(function(x){
+        var p=A.jog[x.id],v=parseFloat(x.nota);
+        if(p&&!isNaN(v)){p.s+=v;p.c++;}
+      });
+    });
+    Object.keys(A.jog).forEach(function(id){var p=A.jog[id];p.n=p.c?Math.round(p.s/p.c*10)/10:'';});
+    return A;
+  }
+  function autoVal(A,sec,f){
+    if(sec==='eq')return A.eq[f];
+    var p=f.split('.'),id=p[0],k=p[1];
+    if(sec==='art')return A.art[id]?A.art[id][k]:0;
+    return A.jog[id]?A.jog[id][k]:(k==='j'?0:'');
+  }
+
+  /* componentes */
+  function tileEl(rot,val,sec,f){
+    var d=document.createElement('div');d.className='tl';
+    var s=document.createElement('small');s.textContent=rot;d.appendChild(s);
+    if(sec&&tEdit===sec){
+      var i=document.createElement('input');i.className='fld';i.type='number';i.min=0;i.inputMode='numeric';i.dataset.f=f;i.value=val;d.appendChild(i);
+    }else{var b=document.createElement('b');b.textContent=val;d.appendChild(b);}
+    return d;
+  }
+  function inp(id,f,val,dec){
+    var i=document.createElement('input');i.className='fld';i.type='number';i.min=0;
+    if(dec){i.step='0.1';i.max=10;i.inputMode='decimal';}else i.inputMode='numeric';
+    i.style.cssText='width:110px;margin:0;padding:10px 14px;font-size:1.2rem';
+    i.dataset.f=id+'.'+f;i.value=val;return i;
+  }
+  function tabN(heads,rows){
+    var w=document.createElement('div');w.style.overflowX='auto';
+    var t=document.createElement('table');t.className='tb';
+    var hr=t.createTHead().insertRow();
+    heads.forEach(function(h){var th=document.createElement('th');th.textContent=h;hr.appendChild(th);});
+    var tb=t.createTBody();
+    rows.forEach(function(r){
+      var tr=tb.insertRow();
+      r.forEach(function(c){var td=tr.insertCell();if(c&&c.nodeType)td.appendChild(c);else td.textContent=c;});
+    });
+    w.appendChild(t);return w;
+  }
+  function barra(sec,box){
+    if(tEdit===sec){
+      var d=document.createElement('div');d.className='sb';
+      [['Salvar',function(){salvarEd(sec);},1],['Cancelar',function(){tEdit=null;renderStat();}],['Restaurar automático',function(){restaurar(sec);}]].forEach(function(x){
+        var b=document.createElement('button');b.type='button';b.className='btn3'+(x[2]?' sv':'');b.textContent=x[0];
+        b.addEventListener('click',x[1]);d.appendChild(b);
+      });
+      box.appendChild(d);
+    }else if(temOv(sec)){
+      box.appendChild(vazioT('Há valores corrigidos manualmente nesta seleção.'));
+    }
+  }
+
+  /* seções */
+  function renderEq(A){
+    var box=$('tEq');box.innerHTML='';
+    if(!A.n&&!temOv('eq')&&tEdit!=='eq'){box.appendChild(vazioT('Nenhuma partida salva neste filtro ainda.'));return;}
+    var F={};['j','v','e','d','gp','gc'].forEach(function(f){F[f]=+G('eq.'+f,A.eq[f]);});
+    var pts=F.v*3+F.e,apr=F.j?Math.round(pts/(F.j*3)*100):0,sg=F.gp-F.gc;
+    var g=document.createElement('div');g.className='tg';
+    [['Jogos','j'],['Vitórias','v'],['Empates','e'],['Derrotas','d'],['Gols marcados','gp'],['Gols sofridos','gc']].forEach(function(x){
+      g.appendChild(tileEl(x[0],F[x[1]],'eq',x[1]));
+    });
+    if(tEdit!=='eq'){
+      g.appendChild(tileEl('Saldo de gols',(sg>0?'+':'')+sg));
+      g.appendChild(tileEl('Pontos',pts));
+      g.appendChild(tileEl('Aproveitamento',apr+'%'));
+      if(A.n){
+        g.appendChild(tileEl('Em casa (V-E-D)',A.casa.join('-')));
+        g.appendChild(tileEl('Fora (V-E-D)',A.fora.join('-')));
+        g.appendChild(tileEl('Jogos sem sofrer gol',A.cs));
+        g.appendChild(tileEl('Média de gols marcados',f1(A.eq.gp/A.n)));
+        g.appendChild(tileEl('Média de gols sofridos',f1(A.eq.gc/A.n)));
+        g.appendChild(tileEl('Finalizações (média)',avg(A.st.fin,'')));
+        g.appendChild(tileEl('Chutes certos (média)',avg(A.st.ch,'')));
+        g.appendChild(tileEl('Posse média',avg(A.st.posse,'%')));
+        g.appendChild(tileEl('Precisão de passes',avg(A.st.passes,'%')));
+      }
+    }
+    box.appendChild(g);
+    if(tEdit!=='eq'&&A.n)box.appendChild(vazioT('Médias: Mansfield x adversário, só das partidas com estatísticas preenchidas.'));
+    barra('eq',box);
+  }
+
+  function renderArt(A){
+    var box=$('tArt');box.innerHTML='';
+    var ed=tEdit==='art';
+    var rows=E.jogadores.map(function(j){
+      var a=A.art[j.id]||{g:0,a:0};
+      return {j:j,g:+G('art.'+j.id+'.g',a.g),a:+G('art.'+j.id+'.a',a.a)};
+    });
+    if(!ed)rows=rows.filter(function(r){return r.g>0||r.a>0;});
+    rows.sort(function(x,y){return y.g-x.g||y.a-x.a||x.j.nome.localeCompare(y.j.nome);});
+    if(!rows.length){box.appendChild(vazioT('Nenhum gol ou assistência registrado neste filtro ainda.'));barra('art',box);return;}
+    box.appendChild(tabN(['Jogador','Gols','Assist.'],rows.map(function(r){
+      return [r.j.nome,ed?inp(r.j.id,'g',r.g):r.g,ed?inp(r.j.id,'a',r.a):r.a];
+    })));
+    barra('art',box);
+  }
+
+  function renderJog(A){
+    var box=$('tJog');box.innerHTML='';
+    var ed=tEdit==='jog';
+    var rows=E.jogadores.map(function(j){
+      var a=A.jog[j.id]||{j:0,n:''};
+      return {j:j,jg:+G('jog.'+j.id+'.j',a.j),n:G('jog.'+j.id+'.n',a.n)};
+    });
+    if(!ed)rows=rows.filter(function(r){return r.jg>0;});
+    rows.sort(function(x,y){return y.jg-x.jg||x.j.nome.localeCompare(y.j.nome);});
+    if(!rows.length){box.appendChild(vazioT('Nenhuma participação registrada neste filtro ainda.'));barra('jog',box);return;}
+    box.appendChild(tabN(['Jogador','Jogos','Nota média'],rows.map(function(r){
+      var nv=r.n===''?'':(+r.n).toFixed(1);
+      return [r.j.nome,ed?inp(r.j.id,'j',r.jg):r.jg,ed?inp(r.j.id,'n',nv,true):(nv===''?'–':nv.replace('.',','))];
+    })));
+    barra('jog',box);
+  }
+
+  function renderHistC(){
+    var box=$('tHist');box.innerHTML='';
+    var g={},ks=[];
+    dados.partidas.forEach(function(m){
+      var k=(tOf(m)||'—')+' · '+(m.competicao||'—');
+      if(!g[k]){g[k]={j:0,v:0,e:0,d:0,gp:0,gc:0};ks.push(k);}
+      var o=g[k];o.j++;o.gp+=m.gm;o.gc+=m.ga;
+      o[m.gm>m.ga?'v':(m.gm===m.ga?'e':'d')]++;
+    });
+    if(!ks.length)return;
+    ks.sort().reverse();
+    var w=tabN(['Competição','J','V','E','D','GP','GC'],ks.map(function(k){var o=g[k];return [k,o.j,o.v,o.e,o.d,o.gp,o.gc];}));
+    w.style.marginTop='18px';box.appendChild(w);
+  }
+
+  function renderStat(){
+    filtros();
+    var A=calc();
+    renderEq(A);renderArt(A);renderJog(A);renderHistC();
+  }
+
+  /* salvar / restaurar correções manuais */
+  function salvarEd(sec){
+    var k=fk(),A=calc();
+    var o=ST[k]=ST[k]||{v:{}};o.v=o.v||{};
+    $(BOX[sec]).querySelectorAll('input[data-f]').forEach(function(i){
+      var f=i.dataset.f,key=sec+'.'+f,v=i.value.trim(),auto=autoVal(A,sec,f);
+      if(v===''||(auto!==''&&Math.abs(+v-(+auto))<1e-9))delete o.v[key];
+      else o.v[key]=+v;
+    });
+    if(!Object.keys(o.v).length)delete ST[k];
+    salvar();tEdit=null;renderStat();
+  }
+  function restaurar(sec){
+    var o=ST[fk()];
+    if(o&&o.v){
+      Object.keys(o.v).forEach(function(key){if(key.indexOf(sec+'.')===0)delete o.v[key];});
+      if(!Object.keys(o.v).length)delete ST[fk()];
+    }
+    salvar();tEdit=null;renderStat();
+  }
+
+  /* ligações */
+  document.querySelectorAll('[data-ed]').forEach(function(b){
+    b.addEventListener('click',function(){tEdit=this.dataset.ed;renderStat();});
+  });
+  $('tTemp').addEventListener('change',function(){tEdit=null;renderStat();});
+  $('tComp').addEventListener('change',function(){tEdit=null;renderStat();});
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-go]');
+    if(a&&a.dataset.go==='estatisticas'){tEdit=null;renderStat();}
+  });
+  var _ah=atualizarHome;
+  atualizarHome=function(){_ah();renderStat();};
+  renderStat();
+
+  /* ---- Base (academia de jovens e planos) ---- */
+  var bEdit=null,plEdit=null;
+  function bv(i){return $(i).value.trim();}
+  function el(tag,cls,txt){var e=document.createElement(tag);if(cls)e.className=cls;if(txt!=null)e.textContent=txt;return e;}
+  function botao(txt,fn,cls,cor){
+    var b=el('button','btn3'+(cls?' '+cls:''),txt);b.type='button';
+    if(cor){b.style.borderColor='#6b2f3a';b.style.color='#ff9aa8';}
+    b.addEventListener('click',fn);return b;
+  }
+
+  function renderBase(){
+    var n=dados.base.length,box=$('bList');
+    $('bT1').textContent=n+(n===1?' jovem':' jovens');
+    box.innerHTML='';
+    if(n){var h=el('h3','sh3','Jovens na base');h.style.marginTop='36px';box.appendChild(h);}
+    dados.base.forEach(function(b){
+      var c=el('div','hi'),t=el('div','t');
+      t.appendChild(el('span','',b.nome));
+      var g=el('span','',b.ger?'GER '+b.ger:'');g.style.color='var(--gold)';t.appendChild(g);
+      c.appendChild(t);
+      var meta=[b.pos,b.idade?b.idade+' anos':'',b.pot?'Potencial '+b.pot:''].filter(Boolean).join(' · ');
+      if(meta)c.appendChild(el('div','m',meta));
+      if(b.obs)c.appendChild(el('div','dt',b.obs));
+      var ac=el('div','ac');ac.style.flexWrap='wrap';
+      ac.appendChild(botao('Promover ao elenco principal',function(){promover(b);},'sv'));
+      ac.appendChild(botao('Editar',function(){editarBase(b);}));
+      ac.appendChild(botao('Liberar',function(){liberar(b);},'',1));
+      c.appendChild(ac);box.appendChild(c);
+    });
+
+    /* planos */
+    var np=dados.planos.length,pb=$('plList');
+    $('plT').textContent=np+(np===1?' plano':' planos');
+    pb.innerHTML='';
+    if(np){var h2=el('h3','sh3','Planos registrados');h2.style.marginTop='36px';pb.appendChild(h2);}
+    dados.planos.forEach(function(p){
+      var c=el('div','hi');
+      c.appendChild(el('div','t',p.jogador));
+      c.appendChild(el('div','dt',p.plano));
+      var ac=el('div','ac');
+      ac.appendChild(botao('Editar',function(){editarPlano(p);}));
+      ac.appendChild(botao('Excluir',function(){
+        if(!confirm('Excluir este plano?'))return;
+        dados.planos=dados.planos.filter(function(x){return x.id!==p.id;});
+        salvar();renderBase();
+      },'',1));
+      c.appendChild(ac);pb.appendChild(c);
+    });
+
+    /* sugestões de nomes para o campo Jogador do plano */
+    var dl=$('plJogs');dl.innerHTML='';
+    dados.base.map(function(b){return b.nome;}).concat(E.jogadores.map(function(j){return j.nome;})).forEach(function(nm){
+      var o=document.createElement('option');o.value=nm;dl.appendChild(o);
+    });
+  }
+
+  function limparBase(){
+    ['bNome','bPos','bIdade','bGer','bPot','bObs'].forEach(function(i){$(i).value='';});
+    bEdit=null;
+    $('bAdd').textContent='Adicionar à base';
+    $('bFTit').textContent='Adicionar jogador à base';
+    $('bCanc').hidden=true;
+  }
+  function editarBase(b){
+    bEdit=b.id;
+    $('bNome').value=b.nome;$('bPos').value=b.pos||'';$('bIdade').value=b.idade||'';
+    $('bGer').value=b.ger||'';$('bPot').value=b.pot||'';$('bObs').value=b.obs||'';
+    $('bAdd').textContent='Salvar alterações';
+    $('bFTit').textContent='Editar jogador da base';
+    $('bCanc').hidden=false;
+    $('bFTit').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  $('bAdd').addEventListener('click',function(){
+    var nome=bv('bNome');
+    if(!nome){$('bNome').focus();return;}
+    var d={nome:nome,pos:bv('bPos'),idade:bv('bIdade'),ger:bv('bGer'),pot:bv('bPot'),obs:bv('bObs')};
+    if(bEdit){
+      dados.base.forEach(function(b){if(b.id===bEdit)Object.assign(b,d);});
+    }else{
+      d.id=Date.now();dados.base.push(d);
+    }
+    salvar();limparBase();renderBase();atualizarHome();
+  });
+  $('bCanc').addEventListener('click',limparBase);
+
+  function promover(b){
+    if(!confirm('Promover '+b.nome+' ao elenco principal? Ele sai da base e vai para a Central do Elenco.'))return;
+    E.jogadores.push({
+      id:E.prox++,nome:b.nome,nac:'',pos:b.pos||'',idade:b.idade||'',ger:b.ger||'',pot:b.pot||'',
+      pe:'',contrato:'',valor:'',salario:'',status:'Elenco principal',obs:b.obs||''
+    });
+    dados.base=dados.base.filter(function(x){return x.id!==b.id;});
+    if(bEdit===b.id)limparBase();
+    salvar();renderBase();renderElenco();atualizarHome();
+  }
+  function liberar(b){
+    if(!confirm('Liberar '+b.nome+'? Ele será removido da base.'))return;
+    dados.base=dados.base.filter(function(x){return x.id!==b.id;});
+    if(bEdit===b.id)limparBase();
+    salvar();renderBase();atualizarHome();
+  }
+
+  /* planos de desenvolvimento */
+  function limparPlano(){
+    $('plJog').value='';$('plTxt').value='';plEdit=null;
+    $('plAdd').textContent='Adicionar plano';
+    $('plFTit').textContent='Adicionar plano';
+    $('plCanc').hidden=true;
+  }
+  function editarPlano(p){
+    plEdit=p.id;$('plJog').value=p.jogador;$('plTxt').value=p.plano;
+    $('plAdd').textContent='Salvar alterações';
+    $('plFTit').textContent='Editar plano';
+    $('plCanc').hidden=false;
+    $('plFTit').scrollIntoView({behavior:'smooth',block:'start'});
+  }
+  $('plAdd').addEventListener('click',function(){
+    var j=bv('plJog'),t=bv('plTxt');
+    if(!j){$('plJog').focus();return;}
+    if(!t){$('plTxt').focus();return;}
+    if(plEdit){
+      dados.planos.forEach(function(p){if(p.id===plEdit){p.jogador=j;p.plano=t;}});
+    }else{
+      dados.planos.push({id:Date.now(),jogador:j,plano:t});
+    }
+    salvar();limparPlano();renderBase();
+  });
+  $('plCanc').addEventListener('click',limparPlano);
+
+  $('bT1').addEventListener('click',function(){$('bB1').hidden=!$('bB1').hidden;});
+  $('plT').addEventListener('click',function(){$('plB').hidden=!$('plB').hidden;});
+  renderBase();
+
+  /* ---- Mercado ---- */
+  var mSel={};
+  function mmsg(t){$('mMsg').textContent=t||'';}
+  function tirarCampo(id){
+    E.slots=E.slots.map(function(x){return x===id?null:x;});
+    E.banco=E.banco.filter(function(x){return x!==id;});
+  }
+  function removerJ(id){E.jogadores=E.jogadores.filter(function(j){return j.id!==id;});tirarCampo(id);}
+
+  function tipoUI(){
+    var t=$('mTipo').value,sai=(t==='Venda'||t==='Empréstimo cedido'),rec=(t==='Empréstimo recebido');
+    $('mJogBox').hidden=sai;
+    $('mElBox').hidden=rec;
+    $('mAddBox').hidden=sai;
+    $('mElLab').textContent=t==='Venda'?'Jogadores do elenco vendidos'
+      :t==='Empréstimo cedido'?'Jogadores do elenco emprestados'
+      :'Jogadores do elenco na negociação (saem na troca)';
+  }
+
+  function renderChecklist(){
+    var box=$('mCl'),q=norm($('mBusca').value);
+    box.innerHTML='';
+    var L=E.jogadores.slice().sort(function(a,b){return a.nome.localeCompare(b.nome);})
+      .filter(function(j){return !q||norm(j.nome).indexOf(q)>-1;});
+    if(!L.length){box.appendChild(vazioT('Nenhum jogador encontrado.'));return;}
+    L.forEach(function(j){
+      var l=document.createElement('label'),c=document.createElement('input');
+      c.type='checkbox';c.checked=!!mSel[j.id];
+      c.addEventListener('change',function(){if(c.checked)mSel[j.id]=1;else delete mSel[j.id];});
+      l.appendChild(c);l.appendChild(el('span','',j.nome+(j.pos?' · '+j.pos:'')));
+      box.appendChild(l);
+    });
+  }
+
+  function renderMercado(){
+    var box=$('mList');box.innerHTML='';
+    if(!dados.mercado.length)box.appendChild(vazioT('Nenhuma movimentação registrada ainda.'));
+    dados.mercado.slice().reverse().forEach(function(m){
+      var c=el('div','hi');
+      var nomes=(m.saidas||[]).map(function(s){return s.nome;});
+      c.appendChild(el('div','t',m.tipo+': '+(m.jogador||nomes.join(', '))));
+      var meta=[m.clube,m.valor,dataBR(m.data),(m.revenda!==''&&m.revenda!=null)?'Revenda '+m.revenda+'%':''].filter(Boolean).join(' · ');
+      if(meta)c.appendChild(el('div','m',meta));
+      var L=[];
+      if(m.jogador&&nomes.length)L.push((m.tipo==='Empréstimo cedido'?'Emprestados: ':'Saem do elenco: ')+nomes.join(', '));
+      if(m.detalhes)L.push(m.detalhes);
+      if(L.length)c.appendChild(el('div','dt',L.join('\n')));
+      var ac=el('div','ac');
+      ac.appendChild(botao('Excluir',function(){desfazer(m);},'',1));
+      c.appendChild(ac);box.appendChild(c);
+    });
+    renderChecklist();
+  }
+
+  function salvarMov(){
+    var tipo=$('mTipo').value,sai=(tipo==='Venda'||tipo==='Empréstimo cedido'),rec=(tipo==='Empréstimo recebido');
+    var ids=rec?[]:Object.keys(mSel).map(Number).filter(function(i){return J(i);});
+    var jog=sai?'':$('mJog').value.trim();
+    if(sai&&!ids.length){mmsg('Selecione ao menos um jogador do elenco.');return;}
+    if(!sai&&!jog){mmsg('Informe o jogador.');$('mJog').focus();return;}
+    if(tipo==='Troca'&&!ids.length){mmsg('Selecione o jogador do elenco usado na troca.');return;}
+    var saidas=[];
+    ids.forEach(function(id){
+      var j=J(id);
+      if(tipo==='Empréstimo cedido'){
+        saidas.push({modo:'emp',id:id,nome:j.nome,statusAnt:j.status||''});
+        j.status='Emprestado';tirarCampo(id);
+      }else{
+        saidas.push({modo:'rem',id:id,nome:j.nome,snap:JSON.parse(JSON.stringify(j))});
+        removerJ(id);
+      }
+    });
+    var entrouId=null;
+    if(!sai&&jog&&$('mAdd').checked){
+      var nv={id:E.prox++,nome:jog,nac:'',pos:'',idade:'',ger:'',pot:'',pe:'',contrato:'',valor:'',salario:'',
+        status:rec?'Emprestado':'Elenco principal',obs:''};
+      E.jogadores.push(nv);entrouId=nv.id;
+    }
+    dados.mercado.push({
+      id:Date.now(),tipo:tipo,jogador:jog,clube:$('mClube').value.trim(),valor:$('mValor').value.trim(),
+      revenda:$('mRev').value,data:$('mData').value,detalhes:$('mDet').value.trim(),
+      saidas:saidas,entrouId:entrouId,criado:Date.now()
+    });
+    salvar();
+    ['mJog','mClube','mValor','mRev','mData','mDet','mBusca'].forEach(function(i){$(i).value='';});
+    mSel={};$('mTipo').selectedIndex=0;$('mAdd').checked=true;tipoUI();
+    renderElenco();renderMercado();atualizarHome();
+    mmsg('Movimentação salva.');
+  }
+
+  function desfazer(m){
+    if(!confirm('Excluir esta movimentação? Jogadores que saíram do elenco voltam, e o jogador adicionado automaticamente é removido.'))return;
+    if(m.entrouId&&J(m.entrouId))removerJ(m.entrouId);
+    (m.saidas||[]).forEach(function(s){
+      if(s.modo==='rem'){if(!J(s.id))E.jogadores.push(s.snap);}
+      else{var j=J(s.id);if(j)j.status=s.statusAnt;}
+    });
+    dados.mercado=dados.mercado.filter(function(x){return x.id!==m.id;});
+    salvar();renderElenco();renderMercado();atualizarHome();
+  }
+
+  $('mTipo').addEventListener('change',tipoUI);
+  $('mBusca').addEventListener('input',renderChecklist);
+  $('mSalvar').addEventListener('click',salvarMov);
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-go]');
+    if(a&&a.dataset.go==='mercado')renderMercado();
+  });
+  tipoUI();renderMercado();
+
+  /* ---- Backup ---- */
+  var LB='mcarreira_ultimo_backup';
+  function bkmsg(t){$('bkMsg').textContent=t||'';}
+  /* reinicia o aplicativo na própria página (sem recarregar o arquivo, que no Android pode falhar) */
+  function recarregar(){
+    try{document.open();document.write('<!DOCTYPE html>\n'+APP_HTML);document.close();}
+    catch(e){bkmsg('Dados gravados. Feche esta aba e abra o arquivo novamente.');}
+  }
+  function fmtDT(iso){
+    try{return new Date(iso).toLocaleString('pt-BR',{dateStyle:'short',timeStyle:'short'});}catch(e){return iso;}
+  }
+  function carimbo(){
+    var d=new Date();function p(n){return String(n).padStart(2,'0');}
+    return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes());
+  }
+  function marcarBackup(qual,iso){
+    var u={};
+    try{u=JSON.parse(localStorage.getItem(LB)||'{}');}catch(e){}
+    u[qual]=iso;
+    try{localStorage.setItem(LB,JSON.stringify(u));}catch(e){}
+  }
+  function pacote(tipo,iso){
+    var r=null;
+    try{r=JSON.parse(localStorage.getItem(RK)||'null');}catch(e){}
+    return {app:'M-Carreira',formato:1,tipo:tipo,criado:iso,dados:dados,rascunho:r};
+  }
+  function htmlCompleto(iso){
+    var base=APP_HTML.replace(new RegExp('<scr'+'ipt id="mc-backup"[\\s\\S]*?</scr'+'ipt>\\n?'),'');
+    var json=JSON.stringify(pacote('completo',iso)).replace(/</g,'\\u003c');
+    var blk='<scr'+'ipt id="mc-backup" type="application/json">'+json+'</scr'+'ipt>\n';
+    return '<!DOCTYPE html>\n'+base.replace('<scr'+'ipt>',function(){return blk+'<scr'+'ipt>';});
+  }
+  function entregar(nome,texto,mime){
+    var url=URL.createObjectURL(new Blob([texto],{type:mime}));
+    var f=null;
+    try{f=new File([texto],nome,{type:mime});}catch(e){}
+    if(f&&navigator.canShare&&navigator.share&&navigator.canShare({files:[f]})){
+      navigator.share({files:[f],title:nome}).catch(function(){});
+    }else{
+      var a=document.createElement('a');a.href=url;a.download=nome;
+      document.body.appendChild(a);a.click();a.remove();
+    }
+    var box=$('bkLink');box.innerHTML='';
+    box.appendChild(el('p','bkn','Arquivo gerado. Se o download não começou, use o link abaixo e mantenha-o pressionado para salvar:'));
+    var l=document.createElement('a');l.href=url;l.download=nome;l.className='lnk';l.textContent=nome;
+    box.appendChild(l);
+  }
+
+  function renderBk(){
+    var u={};
+    try{u=JSON.parse(localStorage.getItem(LB)||'{}');}catch(e){}
+    var box=$('bkInfo');box.innerHTML='';
+    var n=Object.keys(E.custom||{}).length;
+    [
+      'Último backup de dados: '+(u.dados?fmtDT(u.dados):'ainda não feito'),
+      'Último backup completo: '+(u.completo?fmtDT(u.completo):'ainda não feito'),
+      'Registros atuais: '+dados.partidas.length+' partidas · '+E.jogadores.length+' jogadores · '+dados.base.length+' na base · '+dados.mercado.length+' movimentações · '+dados.avisos.length+' avisos · '+n+' formações criadas'
+    ].forEach(function(t){var d=el('div','',t);d.style.cssText='color:var(--muted);font-size:1.3rem;line-height:1.5;margin-bottom:6px';box.appendChild(d);});
+    if(restMsg)bkmsg(restMsg);
+  }
+
+  $('bkJson').addEventListener('click',function(){
+    var iso=new Date().toISOString();
+    entregar('m-carreira-dados-'+carimbo()+'.json',JSON.stringify(pacote('dados',iso),null,1),'application/json');
+    marcarBackup('dados',iso);bkmsg('Backup de dados gerado.');renderBk();
+  });
+  $('bkHtml').addEventListener('click',function(){
+    var iso=new Date().toISOString();
+    entregar('m-carreira-completo-'+carimbo()+'.html',htmlCompleto(iso),'text/html');
+    marcarBackup('completo',iso);bkmsg('Backup completo gerado.');renderBk();
+  });
+
+  /* importar (.json ou .html completo) */
+  $('bkImp').addEventListener('click',function(){$('bkFile').value='';$('bkFile').click();});
+  $('bkFile').addEventListener('change',function(){
+    var f=this.files&&this.files[0];if(!f)return;
+    var r=new FileReader();
+    r.onload=function(){
+      var t=String(r.result),obj=null;
+      try{
+        var m=t.match(new RegExp('<scr'+'ipt id="mc-backup"[^>]*>([\\s\\S]*?)</scr'+'ipt>'));
+        obj=JSON.parse(m?m[1]:t);
+      }catch(e){}
+      if(!obj||obj.app!=='M-Carreira'||!obj.dados||typeof obj.dados!=='object'){
+        bkmsg('Arquivo não reconhecido. Escolha um backup .json ou um .html completo gerado por este aplicativo.');return;
+      }
+      var d=obj.dados,c=function(k){return Array.isArray(d[k])?d[k].length:0;};
+      var nj=d.elenco&&d.elenco.jogadores?d.elenco.jogadores.length:0;
+      if(!confirm('Importar backup de '+fmtDT(obj.criado)+'?\n\n'+c('partidas')+' partidas, '+nj+' jogadores, '+c('base')+' na base, '+c('mercado')+' movimentações, '+c('avisos')+' avisos.\n\nIsso substitui TODOS os dados atuais deste navegador.'))return;
+      try{
+        localStorage.setItem(KEY,JSON.stringify(d));
+        if(obj.rascunho)localStorage.setItem(RK,JSON.stringify(obj.rascunho));else localStorage.removeItem(RK);
+        var tg=document.getElementById('mc-backup');
+        if(tg){try{localStorage.setItem('mcarreira_emb',JSON.parse(tg.textContent).criado);}catch(e2){}}
+      }catch(e3){bkmsg('Não foi possível gravar os dados neste navegador.');return;}
+      bkmsg('Backup importado. Recarregando...');
+      setTimeout(recarregar,700);
+    };
+    r.onerror=function(){bkmsg('Não foi possível ler o arquivo.');};
+    r.readAsText(f);
+  });
+
+  /* apagar dados locais */
+  $('bkApagar').addEventListener('click',function(){
+    if(!confirm('Apagar TODOS os dados salvos neste navegador? Exporte o backup antes.'))return;
+    if(!confirm('Tem certeza? Esta ação não pode ser desfeita.'))return;
+    [KEY,RK,LB,'mcarreira_emb'].forEach(function(k){try{localStorage.removeItem(k);}catch(e){}});
+    var tg=document.getElementById('mc-backup');
+    if(tg){try{localStorage.setItem('mcarreira_emb',JSON.parse(tg.textContent).criado);}catch(e){}}
+    bkmsg('Dados apagados. Recarregando...');
+    setTimeout(recarregar,700);
+  });
+
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('[data-go]');
+    if(a&&a.dataset.go==='backup')renderBk();
+  });
+  renderBk();
+
+  /* ---- mini-campo do card "Central do Elenco" na tela inicial ---- */
+  function renderHomeCampo(){
+    var c=document.querySelector('#v-inicio .pitch');
+    if(!c)return;
+    c.innerHTML='<i></i><span class="mf"></span><div class="mp"></div>';
+    c.querySelector('.mf').textContent=E.formacao;
+    var mp=c.querySelector('.mp'),sl=FORM[E.formacao]||FORM['4-3-3 (2)'];
+    sl.forEach(function(s,i){
+      var id=E.slots[i],j=id?J(id):null;
+      var d=document.createElement('div');d.className='mj'+(j?'':' vz');
+      d.style.left=s[1]+'%';d.style.top=s[2]+'%';
+      var sh=document.createElement('span');sh.className='ms';sh.innerHTML=SVG;
+      var n=document.createElement('span');n.className='mnum';n.textContent=(j&&j.ger)?j.ger:'';
+      sh.appendChild(n);
+      var nm=document.createElement('b');
+      nm.textContent=j?j.nome.split(' ').slice(-1)[0]:'—';
+      d.appendChild(sh);d.appendChild(nm);mp.appendChild(d);
+    });
+  }
+  /* atualiza sempre que a escalação mudar (menos durante a edição de uma formação) */
+  var _rh=renderElenco;
+  renderElenco=function(){_rh();if(!ed)renderHomeCampo();};
+
+  renderElenco();
+  renderQuadro();
+  atualizarHome();
+  var h=(location.hash||'').replace('#','');
+  if(h&&(h==='inicio'||titulos[h]))ir(h);
+  window.mcarreira={dados:dados,salvar:salvar,atualizar:atualizarHome};
+})();
+</script>
+<script>
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", function () {
+    navigator.serviceWorker.register("./sw.js").catch(function (error) {
+      console.warn("Falha ao registrar o modo offline:", error);
+    });
+  });
+}
+</script>
+</body></html>
